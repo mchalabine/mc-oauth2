@@ -1,0 +1,58 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.2.51'
+        springBootVersion = '2.0.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "http://nexus/content/repositories/snapshots/" }
+        maven { url "http://nexus/content/repositories/releases/" }
+        maven { url "http://nexus/content/groups/public" }
+        maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+        maven { url 'http://nexus/content/repositories/central/' }
+    }
+
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'kotlin'
+    apply plugin: 'kotlin-spring'
+
+    group = 'mc'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 1.8
+    compileKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xjsr305=strict"]
+            jvmTarget = "1.8"
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xjsr305=strict"]
+            jvmTarget = "1.8"
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven {url "http://nexus/content/repositories/snapshots/"}
+        maven {url "http://nexus/content/repositories/releases/"}
+        maven {url "http://nexus/content/groups/public"}
+        maven {url 'https://repo.gradle.org/gradle/libs-releases'}
+        maven {url 'http://nexus/content/repositories/central/'}
+    }
+
+    dependencies {
+        compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+        compile "org.jetbrains.kotlin:kotlin-reflect"
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.10'
+}
