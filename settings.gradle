@@ -1,4 +1,4 @@
 include 'application', 'authorization-server', 'domain', 'resource-server', 'integration-test'
 
-rootProject.name = 'mc-oauth2'
+rootProject.name = 'mc-oauth2-spring'
 rootProject.children.each { it.name = rootProject.name + "-" + it.name }
