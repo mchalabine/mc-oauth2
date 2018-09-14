@@ -1,6 +1,4 @@
-include 'authorization', 'resource', 'integration-test'
+include 'application', 'authorization-server', 'domain', 'resource-server', 'integration-test'
 
 rootProject.name = 'mc-oauth2'
 rootProject.children.each { it.name = rootProject.name + "-" + it.name }
-
-

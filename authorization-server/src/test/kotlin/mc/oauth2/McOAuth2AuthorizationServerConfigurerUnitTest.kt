@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = arrayOf(McOAuth2AuthorizationServerConfigurer::class))
 class McOAuth2AuthorizationServerConfigurerUnitTest {
 
     @Test
