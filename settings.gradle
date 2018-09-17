@@ -1,4 +1,17 @@
-include 'application', 'authorization-server', 'domain', 'resource-server', 'integration-test'
+includeSubprojects()
 
 rootProject.name = 'mc-oauth2-spring'
 rootProject.children.each { it.name = rootProject.name + "-" + it.name }
+
+private List<String> includeSubprojects() {
+    fileTree('.') {
+        include '**/*/build.gradle'
+        exclude 'build.gradle'
+    }.collect {
+        relativePath(it.parent)
+                .replace(File.separator, '/')
+    }
+    .each { include(it) }
+}
+
+
