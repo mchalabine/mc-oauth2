@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner
  * @since
  */
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = arrayOf(McAuth2AuthorizationServerPasswordEncodersConfigurer::class))
-class McAuth2AuthorizationServerPasswordEncodersConfigurerUnitTest {
+@SpringBootTest(classes = arrayOf(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class))
+class McOAuth2AuthorizationServerPasswordEncodersConfigurerUnitTest {
 
     @Autowired
     lateinit var context: ApplicationContext

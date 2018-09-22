@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.core.annotation.Order
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -14,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @Configuration
 @EnableWebSecurity
 @Order(1)
-@Import(McAuth2AuthorizationServerPasswordEncodersConfigurer::class)
+@Import(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class)
 class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapter() {
 
     @Autowired
@@ -26,7 +27,6 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
         return super.authenticationManagerBean()
     }
 
-    @Override
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.inMemoryAuthentication()
                 .passwordEncoder(passwordEncoder)
@@ -35,4 +35,11 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
                 .roles("USER")
     }
 
+    override fun configure(http: HttpSecurity) {
+        val antUris = getAntMatchers()
+        http.requestMatchers()
+                .antMatchers(*antUris)
+    }
+
+    private fun getAntMatchers() = arrayOf("/login", "/authorize")
 }

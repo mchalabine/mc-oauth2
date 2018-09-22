@@ -12,9 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.test.context.junit4.SpringRunner
 
 /**
- * @author Mikhail Chalabine
- * @since
- *
  */
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [(McOAuth2AuthorizationServerSecurityConfigurer::class)])
@@ -37,4 +34,8 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
         assertTrue(authenticate.isAuthenticated)
     }
 
+    @Test
+    fun testHttpSecurityAllowsLogin() {
+
+    }
 }
