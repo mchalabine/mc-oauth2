@@ -36,10 +36,15 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
     }
 
     override fun configure(http: HttpSecurity) {
-        val antUris = getAntMatchers()
         http.requestMatchers()
-                .antMatchers(*antUris)
+                .antMatchers(*McOAuth2AuthorizationServerConstants.ANT_MATCHERS)
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
     }
 
-    private fun getAntMatchers() = arrayOf("/login", "/authorize")
 }
