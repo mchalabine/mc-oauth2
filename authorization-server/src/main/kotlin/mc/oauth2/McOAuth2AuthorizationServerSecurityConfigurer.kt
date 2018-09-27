@@ -32,7 +32,7 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
                 .passwordEncoder(passwordEncoder)
                 .withUser("user")
                 .password(passwordEncoder.encode("password"))
-                .roles("USER")
+                .roles(McOAuth2AuthorizationServerConstants.ROLES_USER)
     }
 
     override fun configure(http: HttpSecurity) {
@@ -42,6 +42,10 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .hasRole("USER")
                 .and()
                 .formLogin()
                 .permitAll()

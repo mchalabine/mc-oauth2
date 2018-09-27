@@ -3,6 +3,7 @@ package mc.oauth2
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,12 +12,15 @@ import org.springframework.context.ApplicationContext
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication
+import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.*
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 import org.springframework.web.context.WebApplicationContext
@@ -46,36 +50,69 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
     fun before() {
         mockMvc = webAppContextSetup(webApplicationContext)
                 .addFilter<DefaultMockMvcBuilder>(springSecurityFilterChain)
-                .build();
+                .build()
     }
 
     @Test
     fun testAuthenticationManagerAuthenticatesAsExpectedWhereUserMatches() {
-        val authenticationToken = UsernamePasswordAuthenticationToken("user", "password")
-        val authenticate = authenticationManager.authenticate(authenticationToken)
+        val token = getValidAuthenticationToken()
+        val authenticate = authenticationManager.authenticate(token)
         assertTrue(authenticate.isAuthenticated)
     }
 
     @Test(expected = BadCredentialsException::class)
     fun testAuthenticationManagerRejectsAsExpectedWhereUserMatchesNot() {
-        val authenticationToken = UsernamePasswordAuthenticationToken("user1", "password")
-        val authenticate = authenticationManager.authenticate(authenticationToken)
+        val token = UsernamePasswordAuthenticationToken("user1", "password")
+        val authenticate = authenticationManager.authenticate(token)
         assertFalse(authenticate.isAuthenticated)
     }
 
     @Test
-    fun testHttpSecurityAllowsLogin() {
-        val authenticationToken = UsernamePasswordAuthenticationToken("user", "password")
+    fun testHttpSecurityAllowsGetLogin() {
+        mockMvc.perform(get("/login"))
+                .andExpect(status().is2xxSuccessful)
+    }
+
+    @Test
+    fun testHttpSecurityAllowsGetAuthorize() {
+        mockMvc.perform(get("/authorize"))
+                .andExpect(status().is3xxRedirection)
+    }
+
+    @Test
+    fun testAuthenticationManagerAuthenticatesAsExpectedRoleWhereUserMatches() {
+        val token = getValidAuthenticationToken()
+        val authenticate = authenticationManager.authenticate(token)
+        val actual = authenticate.authorities
+        val expected = SimpleGrantedAuthority("ROLE_${McOAuth2AuthorizationServerConstants.ROLES_USER}")
+        assertTrue(actual.contains(expected))
+    }
+
+    @Test
+    fun testHttpSecurityAuthenticatesAtLoginWhereUserMatches() {
+        val token = getValidAuthenticationToken()
         mockMvc.perform(post("/login")
-                .with(authentication(authenticationToken)))
+                .with(authentication(token)))
                 .andExpect(authenticated())
     }
 
     @Test
+    @Ignore
+    fun testHttpSecurityAllowsLoginWithSupportedRolesWhereAuthenticated() {
+        val token = getValidAuthenticationToken()
+        mockMvc.perform(post("/login")
+                .with(authentication(token)))
+                .andExpect(authenticated()
+                        .withRoles(McOAuth2AuthorizationServerConstants.ROLES_USER))
+    }
+
+    @Test
     fun testHttpSecurityAllowsAuthorize() {
-        val authenticationToken = UsernamePasswordAuthenticationToken("user", "password")
+        val authenticationToken = getValidAuthenticationToken()
         mockMvc.perform(post("/authorize")
                 .with(authentication(authenticationToken)))
                 .andExpect(authenticated())
     }
+
+    private fun getValidAuthenticationToken() = UsernamePasswordAuthenticationToken("user", "password")
 }
