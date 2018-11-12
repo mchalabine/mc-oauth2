@@ -1,17 +1,1 @@
 description = 'OAuth2 Authorization Server'
-
-dependencies {
-
-    compile "org.springframework.boot:spring-boot-starter-web:2.0.4.RELEASE"
-
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:2.0.4.RELEASE"
-
-    compile "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.4.RELEASE"
-
-    compile "com.h2database:h2:1.4.197"
-
-    compile project(":mc-oauth2-spring-domain")
-
-    testCompile project(":mc-oauth2-spring-project-dependencies/test")
-
-}

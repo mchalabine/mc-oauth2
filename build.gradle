@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlinVersion = '1.2.51'
-        springBootVersion = '2.0.4.RELEASE'
+        springBootVersion = '2.1.0.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -17,7 +17,6 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     }
 }
-
 
 subprojects {
     apply plugin: 'kotlin'
@@ -48,9 +47,21 @@ subprojects {
         maven { url 'http://nexus/content/repositories/central/' }
     }
 
+    configurations {
+        oauth2Test
+        oauth2Common
+        oauth2Domain
+    }
+
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
         compile "org.jetbrains.kotlin:kotlin-reflect"
+
+        oauth2Domain project(":mc-oauth2-spring-domain")
+
+        oauth2Common project(":mc-oauth2-spring-dependencies-common")
+
+        oauth2Test project(":mc-oauth2-spring-dependencies-test")
     }
 }
 

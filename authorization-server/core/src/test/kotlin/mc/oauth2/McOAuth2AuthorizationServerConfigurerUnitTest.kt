@@ -2,6 +2,7 @@ package mc.oauth2
 
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = arrayOf(McOAuth2AuthorizationServerConfigurer::class))
+@Ignore
 class McOAuth2AuthorizationServerConfigurerUnitTest {
 
     @Autowired

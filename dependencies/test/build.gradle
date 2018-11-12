@@ -1,0 +1,9 @@
+
+dependencies {
+
+    compile "org.springframework.security:spring-security-test:5.1.1.RELEASE"
+
+    compile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+
+}
+

@@ -1,7 +1,13 @@
 includeSubprojects()
 
 rootProject.name = 'mc-oauth2-spring'
-rootProject.children.each { it.name = rootProject.name + "-" + it.name }
+setSubProjectNames()
+
+private Set<ProjectDescriptor> setSubProjectNames() {
+    rootProject.children.each {
+        it.name = rootProject.name + "-" + it.name.replace('/', '-')
+    }
+}
 
 private List<String> includeSubprojects() {
     fileTree('.') {
@@ -11,7 +17,9 @@ private List<String> includeSubprojects() {
         relativePath(it.parent)
                 .replace(File.separator, '/')
     }
-    .each { include(it) }
+    .each {
+        p -> include(p)
+    }
 }
 
 

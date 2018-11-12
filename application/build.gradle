@@ -2,7 +2,9 @@ description = "OAuth2 Spring Implementation"
 
 dependencies {
 
-    compile project(":mc-oauth2-spring-authorization-server")
+    compile project(":mc-oauth2-spring-authorization-server-core")
 
-    testCompile project(":mc-oauth2-spring-project-dependencies/test")
+    compile project(":mc-oauth2-spring-authorization-server-integration")
+
+    testCompile project(":mc-oauth2-spring-dependencies-test")
 }
