@@ -4,7 +4,5 @@ dependencies {
 
     compile project(":mc-oauth2-spring-authorization-server-core")
 
-    compile project(":mc-oauth2-spring-authorization-server-integration")
-
     testCompile project(":mc-oauth2-spring-dependencies-test")
 }
