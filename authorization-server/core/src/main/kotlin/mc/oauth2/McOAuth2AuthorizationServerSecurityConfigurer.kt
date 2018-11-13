@@ -56,7 +56,7 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.authorizeRequests()
+        init(http)
         configureCsrf(http)
         configureUrisOpenForAll(http)
         configureUrisRestrictedToAdmin(http)
@@ -65,6 +65,10 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
         configureLogout(http)
         configureErrorHandling(http)
         configureUseOfHeaders(http)
+    }
+
+    private fun init(http: HttpSecurity) {
+        http.authorizeRequests()
     }
 
     private fun configureCsrf(http: HttpSecurity) {
@@ -77,8 +81,8 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
 
     private fun configureLoginForm(http: HttpSecurity) {
         http.formLogin()
-                .permitAll()
                 .loginPage(URI_LOGIN)
+                .loginProcessingUrl(URI_LOGIN)
                 .failureUrl(URI_LOGIN_ERROR)
     }
 

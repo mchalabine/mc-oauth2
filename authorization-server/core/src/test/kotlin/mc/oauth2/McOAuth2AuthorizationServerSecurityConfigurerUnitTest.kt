@@ -2,7 +2,6 @@ package mc.oauth2
 
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated
+import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.context.web.WebAppConfiguration
@@ -37,7 +37,6 @@ private const val PASSWORD = "my-secret"
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [(McOAuth2AuthorizationServerSecurityConfigurer::class)])
 @WebAppConfiguration
-@Ignore
 class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
 
     @Autowired
@@ -84,8 +83,9 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
 
     @Test
     fun testHttpSecurityAllowsGetLogin() {
-        mockMvc.perform(get("/login"))
-                .andExpect(status().is2xxSuccessful)
+        mockMvc.perform(get(URI_LOGIN))
+                .andDo(print())
+                .andExpect(status().is4xxClientError)
     }
 
     @Test
@@ -110,13 +110,19 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
         login(token).andExpect(authenticated())
     }
 
+    @Test
+    fun testHttpSecurityReturnsExpectedStatusAtPostAtLoginWhereUserMatches() {
+        val token: Authentication = getValidAuthenticationToken()
+        login(token).andExpect(status().is3xxRedirection)
+    }
+
     private fun login(token: Authentication): ResultActions {
         val csrf: RequestPostProcessor = csrf()
         return login(token, csrf)
     }
 
     private fun login(token: Authentication, csrf: RequestPostProcessor): ResultActions {
-        return mockMvc.perform(post("/login")
+        return mockMvc.perform(post(URI_LOGIN)
                 .param("username", token.principal.toString())
                 .param("password", token.credentials.toString())
                 .with(csrf))
@@ -129,21 +135,25 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
     }
 
     @Test
-    fun testHttpSecurityAuthenticatesNotAtPostAtLoginWhereUserMatchesNot() {
+    fun testHttpSecurityReportsNoAuthoritiesAtPostAtLoginWhereInvalidToken() {
         val token = getInvalidAuthenticationToken()
         val expected = authenticated().withAuthentication(token)
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post(URI_LOGIN)
                 .with(authentication(token)))
                 .andExpect(expected)
+                .andDo(print())
+    }
+
+    @Test
+    fun testHttpSecurityAuthenticatesNotAtPostAtLoginWhereUserMatchesNot() {
+        val token = getInvalidAuthenticationToken()
+        login(token).andExpect(unauthenticated())
     }
 
     @Test
     fun testHttpSecurityAuthenticatesWithRoleUserAtPostAtLoginWhereUserMatches() {
         val token = getValidAuthenticationToken()
-        mockMvc.perform(post("/login")
-                .with(authentication(token)))
-                .andExpect(authenticated()
-                        .withRoles(ROLE_USER))
+        login(token).andExpect(authenticated().withRoles(ROLE_USER, ROLE_ADMIN))
     }
 
     @Test
@@ -157,7 +167,8 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
     private fun getValidAuthenticationToken(): Authentication =
             UsernamePasswordAuthenticationToken(USERNAME, PASSWORD)
 
-    private fun setAuthenticated(token: UsernamePasswordAuthenticationToken): UsernamePasswordAuthenticationToken {
+    private fun setAuthenticated(
+            token: UsernamePasswordAuthenticationToken): UsernamePasswordAuthenticationToken {
         return UsernamePasswordAuthenticationToken(token.name, token.credentials,
                 arrayListOf(SimpleGrantedAuthority(ROLE_USER)))
     }

@@ -1,6 +1,7 @@
 package mc.oauth2
 
 import org.springframework.security.authentication.AuthenticationProvider
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 
 /**
@@ -13,7 +14,7 @@ class McOAuth2AuthenticationProvider(val service: AuthenticationService) : Authe
     }
 
     override fun supports(authentication: Class<*>): Boolean {
-        TODO("not implemented")
+        return authentication.isInstance(UsernamePasswordAuthenticationToken::class)
     }
 
 }
