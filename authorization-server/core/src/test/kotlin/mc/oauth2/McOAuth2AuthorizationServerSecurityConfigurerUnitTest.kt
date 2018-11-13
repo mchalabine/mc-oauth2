@@ -97,11 +97,15 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
     @Test
     fun testAuthenticationManagerAuthenticatesAsExpectedRoleWhereUserMatches() {
         val token = getValidAuthenticationToken()
-        val authenticate = authenticationManager.authenticate(token)
-        val actual = authenticate.authorities
+        val actual = authenticationManager.authenticate(token)
+        val expected = getExpectedAuthority()
+        assertTrue(actual.authorities.contains(expected))
+    }
+
+    private fun getExpectedAuthority(): SimpleGrantedAuthority {
         val expectedRoleName = "ROLE_$ROLE_USER"
         val expected = SimpleGrantedAuthority(expectedRoleName)
-        assertTrue(actual.contains(expected))
+        return expected
     }
 
     @Test
