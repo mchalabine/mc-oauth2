@@ -104,8 +104,7 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
 
     private fun getExpectedAuthority(): SimpleGrantedAuthority {
         val expectedRoleName = "ROLE_$ROLE_USER"
-        val expected = SimpleGrantedAuthority(expectedRoleName)
-        return expected
+        return SimpleGrantedAuthority(expectedRoleName)
     }
 
     @Test

@@ -11,7 +11,7 @@ class McOAuth2AuthenticationServiceConfigurer {
 
     @Bean
     fun authenticationService(): AuthenticationService {
-        return McOAuth2AuthenticationService()
+        return McOAuth2InMemoryAuthenticationService()
     }
 
 }

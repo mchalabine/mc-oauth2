@@ -1,13 +1,15 @@
 package mc.oauth2
 
+import mc.oauth2.AuthenticationResult.AUTHENTICATED
+
 /**
  * @author Michael Chalabine
  */
-class McOAuth2AuthenticationService : AuthenticationService {
+class McOAuth2InMemoryAuthenticationService : AuthenticationService {
 
     override fun authenticate(principal: Principal,
                               credentials: Credentials): AuthenticationResult {
-        TODO("not implemented")
+        return AUTHENTICATED
     }
 
 }
