@@ -119,6 +119,16 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
         login(token).andExpect(status().is3xxRedirection)
     }
 
+    @Test
+    fun testCsrfRejectsRequestWhereNoCsrfTokenPresent() {
+        mockMvc.perform(post(URI_LOGIN)).andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun testCsrfAllowsRequestWhereCsrfTokenPresent() {
+        mockMvc.perform(post(URI_LOGIN).with(csrf())).andExpect(status().is3xxRedirection)
+    }
+
     private fun login(token: Authentication): ResultActions {
         val csrf: RequestPostProcessor = csrf()
         return login(token, csrf)
