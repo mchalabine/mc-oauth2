@@ -89,11 +89,11 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
     private fun liftCsrfProtectionFromOAuth2AuthorizationEndpoint(
             csrfConfigurer: CsrfConfigurer<HttpSecurity>) {
         val path = getOAuth2AuthorizationEndpointPath()
-        liftCsrfProtectionFromPath(csrfConfigurer, path)
+        liftCsrfProtectionForPath(csrfConfigurer, path)
     }
 
-    private fun liftCsrfProtectionFromPath(csrfConfigurer: CsrfConfigurer<HttpSecurity>,
-                                           path: String) {
+    private fun liftCsrfProtectionForPath(csrfConfigurer: CsrfConfigurer<HttpSecurity>,
+                                          path: String) {
         csrfConfigurer.ignoringAntMatchers(path)
     }
 
