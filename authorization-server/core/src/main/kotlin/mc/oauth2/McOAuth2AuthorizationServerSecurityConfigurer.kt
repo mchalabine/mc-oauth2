@@ -83,10 +83,10 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
 
     private fun configureCsrf(http: HttpSecurity) {
         val configurer = getCsrfConfigurer(http)
-        liftCsrfProtectionFromOAuth2AuthorizationEndpoint(configurer)
+        liftCsrfProtectionForOAuth2AuthorizationEndpoint(configurer)
     }
 
-    private fun liftCsrfProtectionFromOAuth2AuthorizationEndpoint(
+    private fun liftCsrfProtectionForOAuth2AuthorizationEndpoint(
             csrfConfigurer: CsrfConfigurer<HttpSecurity>) {
         val path = getOAuth2AuthorizationEndpointPath()
         liftCsrfProtectionForPath(csrfConfigurer, path)
