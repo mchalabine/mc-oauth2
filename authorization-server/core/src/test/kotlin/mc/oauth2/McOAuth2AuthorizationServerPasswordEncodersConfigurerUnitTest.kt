@@ -13,10 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner
 
 /**
  * @author Mikhail Chalabine
- * @since
  */
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = arrayOf(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class))
+@SpringBootTest(classes = [(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class)])
 class McOAuth2AuthorizationServerPasswordEncodersConfigurerUnitTest {
 
     @Autowired
