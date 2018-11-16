@@ -24,6 +24,7 @@ class McOAuth2AuthorizationServerConfigurer : AuthorizationServerConfigurerAdapt
 
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         super.configure(endpoints)
+
     }
 
     override fun configure(security: AuthorizationServerSecurityConfigurer) {
