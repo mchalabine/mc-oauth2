@@ -11,6 +11,7 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated
@@ -29,6 +30,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
+import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.Filter
 
 private const val USERNAME = "my-principal"
@@ -120,8 +123,20 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
     }
 
     @Test
-    fun testCsrfRejectsRequestWhereNoCsrfTokenPresent() {
+    fun testCsrfRejectsRequestWhereCsrfTokenPresentNot() {
         mockMvc.perform(post(URI_LOGIN)).andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun testCsrfAllowsRequestToAuthorizationPathWhereCsrfTokenPresentNot() {
+
+        val builder = UriComponentsBuilder.fromPath("/")
+        val authorize = MvcUriComponentsBuilder
+                .on(AuthorizationEndpoint::class.java)
+                .authorize(null, null, null, null)
+        val path: String = MvcUriComponentsBuilder.fromMethodCall(builder, authorize).build().path!!
+
+        mockMvc.perform(post(path)).andExpect(status().is3xxRedirection)
     }
 
     @Test

@@ -10,11 +10,18 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.MethodInvocationInfo
+import org.springframework.web.util.UriComponentsBuilder
 
 /**
  * @author Michael Chalabine
@@ -25,6 +32,9 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 @Import(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class,
         McOAuth2AuthenticationServiceConfigurer::class)
 class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapter() {
+    override fun configure(web: WebSecurity?) {
+        super.configure(web)
+    }
 
     @Autowired
     lateinit var passwordEncoder: PasswordEncoder
@@ -72,8 +82,60 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
     }
 
     private fun configureCsrf(http: HttpSecurity) {
-        http.csrf()
+        val configurer = getCsrfConfigurer(http)
+        liftCsrfProtectionFromOAuth2AuthorizationEndpoint(configurer)
     }
+
+    private fun liftCsrfProtectionFromOAuth2AuthorizationEndpoint(
+            csrfConfigurer: CsrfConfigurer<HttpSecurity>) {
+        val path = getOAuth2AuthorizationEndpointPath()
+        liftCsrfProtectionFromPath(csrfConfigurer, path)
+    }
+
+    private fun liftCsrfProtectionFromPath(csrfConfigurer: CsrfConfigurer<HttpSecurity>,
+                                           path: String) {
+        csrfConfigurer.ignoringAntMatchers(path)
+    }
+
+    private fun getCsrfConfigurer(http: HttpSecurity) = http.csrf()
+
+    private fun getOAuth2AuthorizationEndpointPath(): String {
+        val builder = getEmptyUriComponentsBuilder()
+        return getOAuth2AuthorizationEndpointPath(builder)
+    }
+
+    private fun getEmptyUriComponentsBuilder() = UriComponentsBuilder.fromPath("/")
+
+    private fun getOAuth2AuthorizationEndpointPath(uriBuilder: UriComponentsBuilder): String {
+        val metaData = getOAuth2AuthorizationEndpointMvcMetaData()
+        return getOAuth2AuthorizationEndpointPath(uriBuilder, metaData)
+    }
+
+    private fun getOAuth2AuthorizationEndpointPath(uriBuilder: UriComponentsBuilder,
+                                                   mvcMetaData: MethodInvocationInfo) =
+            MvcUriComponentsBuilder.fromMethodCall(uriBuilder, mvcMetaData).build().path!!
+
+    private fun getOAuth2AuthorizationEndpointMvcMetaData(): MethodInvocationInfo {
+        val mock = getOAuth2AuthorizationEndpointMock()
+        return extractOAuth2AuthorizationEndpointMvcMetaData(mock)
+    }
+
+    private fun extractOAuth2AuthorizationEndpointMvcMetaData(
+            mock: AuthorizationEndpoint): MethodInvocationInfo {
+        val result = triggerAuthorize(mock)
+        return toMvcMetaData(result)
+    }
+
+    private fun triggerAuthorize(mock: AuthorizationEndpoint): ModelAndView =
+            mock.authorize(null, null, null, null)
+
+    private fun toMvcMetaData(modelAndView: ModelAndView): MethodInvocationInfo {
+        require(modelAndView is MethodInvocationInfo)
+        return modelAndView as MethodInvocationInfo
+    }
+
+    private fun getOAuth2AuthorizationEndpointMock() =
+            MvcUriComponentsBuilder.on(AuthorizationEndpoint::class.java)
 
     private fun configureLogout(http: HttpSecurity) {
         http.logout().permitAll()
