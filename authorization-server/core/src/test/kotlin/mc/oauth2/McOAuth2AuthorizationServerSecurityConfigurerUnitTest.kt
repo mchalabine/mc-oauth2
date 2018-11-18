@@ -129,7 +129,6 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
 
     @Test
     fun testCsrfAllowsRequestToAuthorizationPathWhereCsrfTokenPresentNot() {
-
         val builder = UriComponentsBuilder.fromPath("/")
         val authorize = MvcUriComponentsBuilder
                 .on(AuthorizationEndpoint::class.java)
