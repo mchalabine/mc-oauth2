@@ -1,4 +1,4 @@
-package mc.oauth2
+package mc.oauth2.app
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner
  * @since
  */
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = arrayOf(McOAuth2Application::class))
-class McOAuth2ApplicationUnitTest {
+@SpringBootTest(classes = arrayOf(McOAuth2::class))
+class McOAuth2UnitTest {
 
     @Test
     fun testRunning() {
