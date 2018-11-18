@@ -11,9 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.junit4.SpringRunner
 
-/**
- * @author Mikhail Chalabine
- */
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class)])
 class McOAuth2AuthorizationServerPasswordEncodersConfigurerUnitTest {
