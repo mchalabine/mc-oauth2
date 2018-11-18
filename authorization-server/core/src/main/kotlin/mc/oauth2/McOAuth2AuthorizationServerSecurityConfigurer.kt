@@ -10,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
@@ -32,9 +31,6 @@ import org.springframework.web.util.UriComponentsBuilder
 @Import(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class,
         McOAuth2AuthenticationServiceConfigurer::class)
 class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapter() {
-    override fun configure(web: WebSecurity?) {
-        super.configure(web)
-    }
 
     @Autowired
     lateinit var passwordEncoder: PasswordEncoder
@@ -92,9 +88,8 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
         liftCsrfProtectionForPath(csrfConfigurer, path)
     }
 
-    private fun liftCsrfProtectionForPath(csrfConfigurer: CsrfConfigurer<HttpSecurity>,
-                                          path: String) {
-        csrfConfigurer.ignoringAntMatchers(path)
+    private fun liftCsrfProtectionForPath(configurer: CsrfConfigurer<HttpSecurity>, path: String) {
+        configurer.ignoringAntMatchers(path)
     }
 
     private fun getCsrfConfigurer(http: HttpSecurity) = http.csrf()
