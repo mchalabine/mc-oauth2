@@ -5,7 +5,8 @@ import mc.oauth2.config.AuthenticationResult.AUTHENTICATED
 import mc.oauth2.config.Credentials
 import mc.oauth2.config.Principal
 import org.hamcrest.Matchers.`is`
-import org.junit.Assert.*
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
