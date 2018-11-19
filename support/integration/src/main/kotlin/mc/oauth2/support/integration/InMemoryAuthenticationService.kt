@@ -9,7 +9,7 @@ import mc.oauth2.config.Principal
 /**
  * @author Michael Chalabine
  */
-class InMemoryTestAuthenticationService : AuthenticationService {
+class InMemoryAuthenticationService : AuthenticationService {
 
     override fun authenticate(principal: Principal,
                               credentials: Credentials): AuthenticationResult {

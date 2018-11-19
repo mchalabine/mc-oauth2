@@ -21,7 +21,7 @@ private const val PASSWORD = "my-secret"
 @RunWith(JUnit4::class)
 class InMemoryTestAuthenticationServiceUnitTest {
 
-    private lateinit var testAuthenticationService: InMemoryTestAuthenticationService
+    private lateinit var authenticationService: InMemoryAuthenticationService
 
     private val principal: Principal = Principal()
 
@@ -29,18 +29,18 @@ class InMemoryTestAuthenticationServiceUnitTest {
 
     @Before
     fun setUp() {
-        testAuthenticationService = InMemoryTestAuthenticationService()
+        authenticationService = InMemoryAuthenticationService()
     }
 
     @Test
     fun testInstantiate() {
-        assertNotNull(testAuthenticationService)
+        assertNotNull(authenticationService)
     }
 
     @Test
     fun testAuthenticatesWhereUsernameAndCredentialsMatches() {
         val actual: AuthenticationResult =
-                testAuthenticationService.authenticate(principal, credentials)
+                authenticationService.authenticate(principal, credentials)
         assertThat(actual, `is`(AUTHENTICATED))
     }
 }
