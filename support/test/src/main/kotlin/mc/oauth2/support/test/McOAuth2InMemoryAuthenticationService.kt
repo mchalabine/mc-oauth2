@@ -1,6 +1,10 @@
-package mc.oauth2.config
+package mc.oauth2.support.test
 
+import mc.oauth2.config.AuthenticationResult
 import mc.oauth2.config.AuthenticationResult.AUTHENTICATED
+import mc.oauth2.config.AuthenticationService
+import mc.oauth2.config.Credentials
+import mc.oauth2.config.Principal
 
 /**
  * @author Michael Chalabine

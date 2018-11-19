@@ -1,6 +1,9 @@
-package mc.oauth2.config
+package mc.oauth2.support.test
 
+import mc.oauth2.config.AuthenticationResult
 import mc.oauth2.config.AuthenticationResult.AUTHENTICATED
+import mc.oauth2.config.Credentials
+import mc.oauth2.config.Principal
 import org.hamcrest.Matchers.`is`
 import org.junit.Assert.*
 import org.junit.Before

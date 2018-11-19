@@ -8,3 +8,12 @@ configurations {
 
 }
 
+dependencies {
+
+    compile project(":mc-oauth2-spring-integration-api")
+
+    // TODO Remove! Provides In-memory AuthenticationService
+    compile project(":mc-oauth2-spring-support-test")
+
+}
+

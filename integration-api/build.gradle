@@ -1,0 +1,7 @@
+description = "Integration API (SPI)"
+
+configurations {
+
+    compile.extendsFrom(oauth2Domain)
+
+}
