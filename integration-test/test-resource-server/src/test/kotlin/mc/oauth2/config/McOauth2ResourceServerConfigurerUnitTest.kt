@@ -1,4 +1,4 @@
-package mc.oauth2
+package mc.oauth2.config
 
 /**
  * @author Mikhail Chalabine

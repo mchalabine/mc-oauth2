@@ -1,4 +1,4 @@
-package mc.oauth2
+package mc.oauth2.config
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = [(McOAuth2AuthorizationServerConfigurer::class)])
+@SpringBootTest(classes = [(mc.oauth2.config.McOAuth2AuthorizationServerConfigurer::class)])
 class McOAuth2AuthorizationServerConfigurerUnitTestMcOAuth2AuthorizationServerConfigurerUnitTest {
 
     @Autowired

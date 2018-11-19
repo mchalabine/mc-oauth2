@@ -1,6 +1,6 @@
-package mc.oauth2
+package mc.oauth2.config
 
-import mc.oauth2.AuthenticationResult.AUTHENTICATED
+import mc.oauth2.config.AuthenticationResult.AUTHENTICATED
 
 /**
  * @author Michael Chalabine

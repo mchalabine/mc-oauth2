@@ -1,6 +1,6 @@
-package mc.oauth2
+package mc.oauth2.config
 
-import mc.oauth2.Profiles.IN_MEM
+import mc.oauth2.config.Profiles.IN_MEM
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Profile

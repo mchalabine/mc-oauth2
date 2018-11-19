@@ -1,4 +1,4 @@
-package mc.oauth2
+package mc.oauth2.config
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.SecurityProperties
@@ -48,7 +48,7 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
 
     private fun exposeProviderAndThusDisableSpringBootAutoConfiguration(
             service: AuthenticationService): AuthenticationProvider {
-        return McOAuth2AuthenticationProvider(service)
+        return mc.oauth2.config.McOAuth2AuthenticationProvider(service)
     }
 
     @Throws(Exception::class)
