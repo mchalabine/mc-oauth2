@@ -1,16 +1,17 @@
 package mc.oauth2.support.test
 
 import mc.oauth2.config.AuthenticationService
+import mc.oauth2.support.integration.InMemoryTestAuthenticationService
 import org.springframework.boot.test.context.TestConfiguration
 
 /**
  * @author Michael Chalabine
  */
 @TestConfiguration
-class McOAuth2AuthorizationServerTestSecurityConfigurer {
+class AuthorizationServerTestSecurityConfigurer {
 
     fun authenticationService() : AuthenticationService {
-        val service = McOAuth2InMemoryAuthenticationService()
+        val service = InMemoryTestAuthenticationService()
         TODO("Not yet implemented")
     }
 }

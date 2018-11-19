@@ -1,4 +1,4 @@
-package mc.oauth2.support.test
+package mc.oauth2.support.integration
 
 import mc.oauth2.config.AuthenticationResult
 import mc.oauth2.config.AuthenticationResult.AUTHENTICATED
@@ -9,7 +9,7 @@ import mc.oauth2.config.Principal
 /**
  * @author Michael Chalabine
  */
-class McOAuth2InMemoryAuthenticationService : AuthenticationService {
+class InMemoryTestAuthenticationService : AuthenticationService {
 
     override fun authenticate(principal: Principal,
                               credentials: Credentials): AuthenticationResult {

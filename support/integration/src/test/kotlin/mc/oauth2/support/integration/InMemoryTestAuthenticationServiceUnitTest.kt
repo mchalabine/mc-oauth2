@@ -1,4 +1,4 @@
-package mc.oauth2.support.test
+package mc.oauth2.support.integration
 
 import mc.oauth2.config.AuthenticationResult
 import mc.oauth2.config.AuthenticationResult.AUTHENTICATED
@@ -19,9 +19,9 @@ private const val PASSWORD = "my-secret"
  * @author Michael Chalabine
  */
 @RunWith(JUnit4::class)
-class McOAuth2InMemoryAuthenticationServiceUnitTest {
+class InMemoryTestAuthenticationServiceUnitTest {
 
-    private lateinit var authenticationService: McOAuth2InMemoryAuthenticationService
+    private lateinit var testAuthenticationService: InMemoryTestAuthenticationService
 
     private val principal: Principal = Principal()
 
@@ -29,18 +29,18 @@ class McOAuth2InMemoryAuthenticationServiceUnitTest {
 
     @Before
     fun setUp() {
-        authenticationService = McOAuth2InMemoryAuthenticationService()
+        testAuthenticationService = InMemoryTestAuthenticationService()
     }
 
     @Test
     fun testInstantiate() {
-        assertNotNull(authenticationService)
+        assertNotNull(testAuthenticationService)
     }
 
     @Test
     fun testAuthenticatesWhereUsernameAndCredentialsMatches() {
         val actual: AuthenticationResult =
-                authenticationService.authenticate(principal, credentials)
+                testAuthenticationService.authenticate(principal, credentials)
         assertThat(actual, `is`(AUTHENTICATED))
     }
 }
