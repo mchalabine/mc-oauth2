@@ -19,7 +19,7 @@ private const val PASSWORD = "my-secret"
  * @author Michael Chalabine
  */
 @RunWith(JUnit4::class)
-class InMemoryTestAuthenticationServiceUnitTest {
+class InMemoryAuthenticationServiceUnitTest {
 
     private lateinit var authenticationService: InMemoryAuthenticationService
 
