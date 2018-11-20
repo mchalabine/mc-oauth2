@@ -8,5 +8,5 @@ import org.springframework.context.annotation.Import
  */
 @Configuration
 @Import(McOAuth2AuthorizationServerSecurityConfigurer::class)
-class AppConfiguration {
+class McOAuth2AuthorizationServerConfiguration {
 }
