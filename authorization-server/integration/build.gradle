@@ -10,8 +10,6 @@ configurations {
 
 dependencies {
 
-    compile project(":mc-oauth2-spring-integration-api")
-
     compile project(":mc-oauth2-spring-integration-local")
 
 }
