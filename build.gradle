@@ -48,9 +48,11 @@ subprojects {
     }
 
     configurations {
-        oauth2Test
         oauth2Common
         oauth2Domain
+        oauth2Spring
+        oauth2Persistence
+        oauth2Test
     }
 
     dependencies {
@@ -60,6 +62,10 @@ subprojects {
         oauth2Domain project(":mc-oauth2-spring-common-domain")
 
         oauth2Common project(":mc-oauth2-spring-dependencies-common")
+
+        oauth2Domain project(":mc-oauth2-spring-dependencies-persistence")
+
+        oauth2Spring project(":mc-oauth2-spring-dependencies-spring")
 
         oauth2Test project(":mc-oauth2-spring-dependencies-test")
     }
