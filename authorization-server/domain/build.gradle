@@ -1,0 +1,12 @@
+description = 'OAuth2 Authorization Server Domain'
+
+configurations {
+    compile.extendsFrom(oauth2Domain)
+    testCompile.extendsFrom(oauth2Test)
+}
+
+
+dependencies {
+
+}
+

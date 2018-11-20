@@ -1,0 +1,11 @@
+description = "Implements Local Integration (in-memory)"
+
+configurations {
+
+    compile.extendsFrom(oauth2Domain, oauth2Test)
+}
+
+dependencies {
+
+    compile project(":mc-oauth2-spring-integration-api")
+}
