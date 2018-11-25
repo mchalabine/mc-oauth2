@@ -3,10 +3,11 @@ package mc.oauth2.config
 /**
  * @author Michael Chalabine
  */
-class User private constructor() {
+data class User private constructor(private val builder: UserBuilder) {
 
-    lateinit var principal: Principal
-    lateinit var credentials: Credentials
+    val principal: Principal
+
+    val credentials: Credentials
 
     companion object {
         fun aUser(): UserBuilderPrincipal {
@@ -14,7 +15,12 @@ class User private constructor() {
         }
     }
 
-    class UserBuilder : UserBuilderPrincipal, UserBuilderBuild, UserBuilderCredentials {
+    init {
+        this.principal = builder.principal
+        this.credentials = builder.credentials
+    }
+
+    private class UserBuilder : UserBuilderPrincipal, UserBuilderBuild, UserBuilderCredentials {
 
         internal lateinit var principal: Principal
         internal lateinit var credentials: Credentials
@@ -38,21 +44,16 @@ class User private constructor() {
         }
     }
 
-    private constructor(builder: UserBuilder) : this() {
-        this.principal = builder.principal
-        this.credentials = builder.credentials
-    }
-
     interface UserBuilderPrincipal : UserBuilderBuild {
         fun withPrincipal(principal: String): UserBuilderCredentials
     }
 
-    interface UserBuilderBuild {
-        fun build(): User
-    }
-
     interface UserBuilderCredentials {
         fun withCredentials(credentials: String): UserBuilderBuild
+    }
+
+    interface UserBuilderBuild {
+        fun build(): User
     }
 
 }

@@ -33,7 +33,6 @@ import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.Filter
 
 @WebAppConfiguration
-@TestApplication
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfigurer::class,
     McOAuth2AuthenticationServiceConfigurer::class])
