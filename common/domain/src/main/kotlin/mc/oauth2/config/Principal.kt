@@ -3,12 +3,25 @@ package mc.oauth2.config
 /**
  * @author Michael Chalabine
  */
-class Principal private constructor() {
+data class Principal private constructor(private val builder: PrincipalBuilder) {
 
-    private lateinit var principal: String
+    private val principal: String
 
-    class PrincipalBuilder : PrincipalBuilderPrincipal,
-        PrincipalBuilderBuild {
+    init {
+        this.principal = builder.principle
+    }
+
+    companion object {
+        fun valueOf(principal: String): Principal {
+            return aPrincipal().withPrincipal(principal).build()
+        }
+
+        private fun aPrincipal(): PrincipalBuilderPrincipal {
+            return PrincipalBuilder()
+        }
+    }
+
+    private class PrincipalBuilder : PrincipalBuilderPrincipal, PrincipalBuilderBuild {
 
         lateinit var principle: String
 
@@ -23,20 +36,6 @@ class Principal private constructor() {
 
         override fun build(): Principal {
             return Principal(this)
-        }
-    }
-
-    private constructor(builder: PrincipalBuilder) : this() {
-        this.principal = builder.principle
-    }
-
-    companion object {
-        fun valueOf(principal: String): Principal {
-            return aPrincipal().withPrincipal(principal).build()
-        }
-
-        private fun aPrincipal(): PrincipalBuilderPrincipal {
-            return PrincipalBuilder()
         }
     }
 
