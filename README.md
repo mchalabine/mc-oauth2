@@ -1,1 +1,1 @@
-OAuth2 Test Implementation using Kotlin, Gradle and JUnit5
+OAuth2 Test Implementation using Kotlin, SpringBoot, Gradle and JUnit5
