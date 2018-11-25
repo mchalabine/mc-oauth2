@@ -23,7 +23,7 @@ class McOAuth2AuthenticationProvider(private val authenticationService: Authenti
     private fun authenticate(p: Principal, c: Credentials): UsernamePasswordAuthenticationToken {
         val authenticationResult = authenticationService.authenticate(p, c)
         return UsernamePasswordAuthenticationToken(p, c,
-                arrayListOf(SimpleGrantedAuthority(ROLE_USER)))
+                arrayListOf(SimpleGrantedAuthority("ROLE_$ROLE_USER")))
     }
 
     private fun getCredentials(authentication: Authentication) =
