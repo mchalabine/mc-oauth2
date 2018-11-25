@@ -7,8 +7,8 @@ internal class PrincipalUnitTest {
 
     @Test
     fun testToStringReturnsExpected() {
-        val actual = Principal.valueOf(USERNAME)
-        val expected = USERNAME
+        val actual = Principal.valueOf(PASSWORD)
+        val expected = PASSWORD
         assertThat(actual.toString()).isSameAs(expected)
     }
 }

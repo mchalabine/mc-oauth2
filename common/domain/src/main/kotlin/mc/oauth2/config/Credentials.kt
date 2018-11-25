@@ -1,8 +1,15 @@
 package mc.oauth2.config
 
-class Credentials private constructor() {
+/**
+ * @author Michael Chalabine
+ */
+data class Credentials private constructor(private val builder: CredentialsBuilder) {
 
-    private lateinit var credentials: String
+    private val credentials: String
+
+    init {
+        this.credentials = builder.credentials
+    }
 
     companion object {
 
@@ -13,11 +20,10 @@ class Credentials private constructor() {
         private fun aCredentials(): CredentialsBuilderCredentials {
             return CredentialsBuilder()
         }
-
     }
 
-    class CredentialsBuilder : CredentialsBuilderCredentials,
-        CredentialsBuilderBuild {
+    private class CredentialsBuilder : CredentialsBuilderCredentials, CredentialsBuilderBuild {
+
         internal lateinit var credentials: String
 
         override fun withCredentials(credentials: String): CredentialsBuilderBuild {
@@ -32,11 +38,6 @@ class Credentials private constructor() {
         override fun build(): Credentials {
             return Credentials(this)
         }
-
-    }
-
-    private constructor(builder: CredentialsBuilder) : this() {
-        this.credentials = builder.credentials
     }
 
     interface CredentialsBuilderCredentials {
@@ -50,6 +51,5 @@ class Credentials private constructor() {
     override fun toString(): String {
         return "$credentials"
     }
-
 
 }
