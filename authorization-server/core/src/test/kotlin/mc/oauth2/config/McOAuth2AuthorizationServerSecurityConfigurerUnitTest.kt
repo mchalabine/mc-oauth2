@@ -1,9 +1,9 @@
 package mc.oauth2.config
 
-import org.junit.Assert.*
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.AuthenticationManager
@@ -17,11 +17,9 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
-import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.ResultMatcher
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.RequestPostProcessor
@@ -34,35 +32,35 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.Filter
 
-private const val USERNAME = "my-principal"
-private const val PASSWORD = "my-secret"
-
-@RunWith(SpringRunner::class)
-@SpringBootTest(classes = [(McOAuth2AuthorizationServerSecurityConfigurer::class)])
 @WebAppConfiguration
-class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
+@TestApplication
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfigurer::class,
+    McOAuth2AuthenticationServiceConfigurer::class])
+internal class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
 
     @Autowired
     lateinit var webApplicationContext: WebApplicationContext
 
     @Autowired
-    lateinit var authenticationManager: AuthenticationManager
+    lateinit var springSecurityFilterChain: Filter
 
     @Autowired
-    lateinit var springSecurityFilterChain: Filter
+    lateinit var authenticationManager: AuthenticationManager
 
     lateinit var mockMvc: MockMvc
 
-    @Before
-    fun before() {
+    @BeforeEach
+    fun beforeEach() {
         mockMvc = webAppContextSetup(webApplicationContext)
                 .apply { SecurityMockMvcConfigurers.springSecurity() }
                 .addFilter<DefaultMockMvcBuilder>(springSecurityFilterChain)
                 .build()
+        authenticationManager = webApplicationContext.getBean(AuthenticationManager::class.java)
     }
 
     @Test
-    fun testWebContextContainsAuthenticationManager() {
+    fun testApplicationContextContainsAuthenticationManager() {
         val manager = webApplicationContext.getBean(AuthenticationManager::class.java)
         assertNotNull(manager)
     }
@@ -74,11 +72,12 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
         assertTrue(actual.isAuthenticated)
     }
 
-    @Test(expected = BadCredentialsException::class)
+    @Test
     fun testAuthenticationManagerRejectsAsExpectedWhereUserMatchesNot() {
         val token = getInvalidAuthenticationToken()
-        val authenticate = authenticationManager.authenticate(token)
-        assertFalse(authenticate.isAuthenticated)
+        assertThrows(BadCredentialsException::class.java) {
+            authenticationManager.authenticate(token)
+        }
     }
 
     private fun getInvalidAuthenticationToken(): UsernamePasswordAuthenticationToken =
@@ -156,11 +155,6 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
                 .andDo(print())
     }
 
-    private fun getValidAuthentication(token: UsernamePasswordAuthenticationToken): ResultMatcher {
-        val tokenAuthenticated = setAuthenticated(token)
-        return authenticated().withAuthentication(tokenAuthenticated)
-    }
-
     @Test
     fun testHttpSecurityReportsNoAuthoritiesAtPostAtLoginWhereInvalidToken() {
         val token = getInvalidAuthenticationToken()
@@ -194,9 +188,4 @@ class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
     private fun getValidAuthenticationToken(): Authentication =
             UsernamePasswordAuthenticationToken(USERNAME, PASSWORD)
 
-    private fun setAuthenticated(
-            token: UsernamePasswordAuthenticationToken): UsernamePasswordAuthenticationToken {
-        return UsernamePasswordAuthenticationToken(token.name, token.credentials,
-                arrayListOf(SimpleGrantedAuthority(ROLE_USER)))
-    }
 }

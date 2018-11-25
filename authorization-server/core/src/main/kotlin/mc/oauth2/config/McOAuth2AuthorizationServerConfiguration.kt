@@ -1,5 +1,6 @@
 package mc.oauth2.config
 
+import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 
@@ -8,5 +9,4 @@ import org.springframework.context.annotation.Import
  */
 @Configuration
 @Import(McOAuth2AuthorizationServerSecurityConfigurer::class)
-class McOAuth2AuthorizationServerConfiguration {
-}
+class McOAuth2AuthorizationServerConfiguration

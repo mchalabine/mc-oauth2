@@ -14,17 +14,5 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @Profile(IN_MEM)
 class McOAuth2AuthorizationServerConfigurer : AuthorizationServerConfigurerAdapter() {
 
-    override fun configure(clients: ClientDetailsServiceConfigurer) {
-        super.configure(clients)
-    }
-
-    override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
-        super.configure(endpoints)
-
-    }
-
-    override fun configure(security: AuthorizationServerSecurityConfigurer) {
-        super.configure(security)
-    }
 }
 

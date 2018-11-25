@@ -9,4 +9,6 @@ configurations {
 dependencies {
 
     compile project(":mc-oauth2-spring-integration-api")
+
+    testCompile project(":mc-oauth2-spring-common-domain-test")
 }

@@ -3,5 +3,12 @@ description = "Integration API (SPI)"
 configurations {
 
     compile.extendsFrom(oauth2Domain)
+    testCompile.extendsFrom(oauth2Test)
+
+}
+
+dependencies {
+
+    testCompile project(":mc-oauth2-spring-common-domain-test")
 
 }

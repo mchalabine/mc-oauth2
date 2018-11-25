@@ -1,46 +1,34 @@
 package mc.oauth2.support.integration
 
+import mc.oauth2.config.*
 import mc.oauth2.integration.AuthenticationResult
 import mc.oauth2.integration.AuthenticationResult.AUTHENTICATED
-import mc.oauth2.integration.Credentials
-import mc.oauth2.integration.Principal
-import org.hamcrest.Matchers.`is`
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertThat
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
-private const val USERNAME = "my-principal"
-private const val PASSWORD = "my-secret"
-
-/**
- * @author Michael Chalabine
- */
-@RunWith(JUnit4::class)
-class InMemoryAuthenticationServiceUnitTest {
+internal class InMemoryAuthenticationServiceUnitTest {
 
     private lateinit var authenticationService: InMemoryAuthenticationService
 
-    private val principal: Principal = Principal()
+    private val principal: Principal = Principal.valueOf(USERNAME)
 
-    private val credentials: Credentials = Credentials()
+    private val credentials: Credentials = Credentials.valueOf(PASSWORD)
 
-    @Before
+    @BeforeEach
     fun setUp() {
-        authenticationService = InMemoryAuthenticationService()
-    }
-
-    @Test
-    fun testInstantiate() {
-        assertNotNull(authenticationService)
+        authenticationService = InMemoryAuthenticationService.aService()
+                .withUser(User.aUser()
+                        .withPrincipal(USERNAME)
+                        .withCredentials(PASSWORD)
+                        .build())
+                .build()
     }
 
     @Test
     fun testAuthenticatesWhereUsernameAndCredentialsMatches() {
         val actual: AuthenticationResult =
                 authenticationService.authenticate(principal, credentials)
-        assertThat(actual, `is`(AUTHENTICATED))
+        assertThat(actual).isSameAs(AUTHENTICATED)
     }
 }

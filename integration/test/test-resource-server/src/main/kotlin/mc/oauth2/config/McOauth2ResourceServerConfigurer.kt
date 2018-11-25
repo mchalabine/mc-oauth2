@@ -5,6 +5,4 @@ package mc.oauth2.config
  * @since
  */
 
-class McOauth2ResourceServerConfigurer {
-
-}
+class McOauth2ResourceServerConfigurer

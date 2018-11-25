@@ -13,7 +13,12 @@ class McOAuth2AuthenticationServiceConfigurer {
 
     @Bean
     fun authenticationService(): AuthenticationService {
-        return InMemoryAuthenticationService()
+        return InMemoryAuthenticationService.aService()
+                .withUser(User.aUser()
+                        .withPrincipal("my-principal")
+                        .withCredentials("my-credentials")
+                        .build())
+                .build()
     }
 
 }

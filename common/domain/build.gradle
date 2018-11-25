@@ -1,0 +1,7 @@
+description = "Common domain"
+
+configurations {
+
+    testCompile.extendsFrom(oauth2Test)
+
+}

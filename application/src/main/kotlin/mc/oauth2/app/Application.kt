@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import
 
 @SpringBootApplication
 @Import(McOAuth2AuthorizationServerConfiguration::class)
-class Application() {
+class Application {
 
     fun main(args: Array<String>) {
         SpringApplicationBuilder(Application::class.java).run(*args)

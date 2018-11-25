@@ -1,0 +1,6 @@
+configurations {
+
+    compile.extendsFrom(oauth2Domain, oauth2Spring, oauth2Test)
+    testCompile.extendsFrom(oauth2Test)
+
+}

@@ -57,6 +57,7 @@ subprojects {
 
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
         compile "org.jetbrains.kotlin:kotlin-reflect"
 
         oauth2Domain project(":mc-oauth2-spring-common-domain")
@@ -68,9 +69,15 @@ subprojects {
         oauth2Spring project(":mc-oauth2-spring-dependencies-spring")
 
         oauth2Test project(":mc-oauth2-spring-dependencies-test")
+
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
-task wrapper(type: Wrapper) {
+wrapper {
     gradleVersion = '4.10'
 }
+

@@ -1,10 +1,6 @@
 package mc.oauth2.config
 
-class TestData {
+const val USERNAME = "my-principal"
+const val PASSWORD = "my-secret"
 
-    class TestUser {
-
-
-    }
-
-}
+class TestData

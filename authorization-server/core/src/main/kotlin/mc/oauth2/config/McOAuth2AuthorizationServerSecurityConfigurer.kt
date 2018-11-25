@@ -2,6 +2,8 @@ package mc.oauth2.config
 
 import mc.oauth2.integration.AuthenticationService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.SpringBootConfiguration
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,7 +16,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
@@ -29,12 +30,9 @@ import org.springframework.web.util.UriComponentsBuilder
 @Configuration
 @EnableWebSecurity
 @Order(SecurityProperties.BASIC_AUTH_ORDER - 10)
-@Import(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class,
-        McOAuth2AuthenticationServiceConfigurer::class)
-class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapter() {
-
-    @Autowired
-    lateinit var passwordEncoder: PasswordEncoder
+@Import(McOAuth2AuthenticationServiceConfigurer::class)
+class McOAuth2AuthorizationServerSecurityConfigurer(
+        private val authenticationService: AuthenticationService) : WebSecurityConfigurerAdapter() {
 
     @Bean
     @Throws(Exception::class)
@@ -42,23 +40,10 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
         return super.authenticationManagerBean()
     }
 
-    @Bean
-    fun authenticationProvider(service: AuthenticationService): AuthenticationProvider {
-        return exposeProviderAndThusDisableSpringBootAutoConfiguration(service)
-    }
-
-    private fun exposeProviderAndThusDisableSpringBootAutoConfiguration(
-            service: AuthenticationService): AuthenticationProvider {
-        return mc.oauth2.config.McOAuth2AuthenticationProvider(service)
-    }
-
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser("my-principal")
-                .password(passwordEncoder.encode("my-secret"))
-                .roles(*ROLES_ALL)
+        val loginAuthenticator = getLoginAuthenticationProvider()
+        auth.authenticationProvider(loginAuthenticator)
     }
 
     @Throws(Exception::class)
@@ -72,6 +57,10 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
         configureLogout(http)
         configureErrorHandling(http)
         configureUseOfHeaders(http)
+    }
+
+    private fun getLoginAuthenticationProvider(): AuthenticationProvider {
+        return McOAuth2AuthenticationProvider(authenticationService)
     }
 
     private fun init(http: HttpSecurity) {
@@ -169,4 +158,5 @@ class McOAuth2AuthorizationServerSecurityConfigurer : WebSecurityConfigurerAdapt
         http.authorizeRequests()
                 .antMatchers(*URIS_ALLOWED).permitAll()
     }
+
 }
