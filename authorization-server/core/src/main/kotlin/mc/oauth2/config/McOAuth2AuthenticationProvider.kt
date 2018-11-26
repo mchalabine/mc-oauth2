@@ -29,8 +29,12 @@ class McOAuth2AuthenticationProvider(private val authenticationService: Authenti
     private fun getCredentials(authentication: Authentication) =
             getCredentials(authentication.credentials.toString())
 
-    private fun getPrincipal(authentication: Authentication) =
-            getPrincipal(authentication.principal.toString())
+    private fun getPrincipal(authentication: Authentication): Principal {
+        val principal = authentication.principal
+        return getPrincipal(principal)
+    }
+
+    private fun getPrincipal(principal: Any) = getPrincipal(principal.toString())
 
     private fun getCredentials(credentials: String): Credentials {
         return Credentials.valueOf(credentials)
