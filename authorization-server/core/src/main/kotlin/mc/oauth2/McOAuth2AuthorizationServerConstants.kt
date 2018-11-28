@@ -1,4 +1,4 @@
-package mc.oauth2.config
+package mc.oauth2
 
 import java.time.Duration
 

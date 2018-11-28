@@ -1,5 +1,8 @@
 package mc.oauth2.config
 
+import mc.oauth2.ROLE_ADMIN
+import mc.oauth2.ROLE_USER
+import mc.oauth2.URI_LOGIN
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
