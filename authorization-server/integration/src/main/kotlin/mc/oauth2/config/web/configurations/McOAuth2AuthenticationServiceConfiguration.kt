@@ -1,4 +1,4 @@
-package mc.oauth2.config
+package mc.oauth2.config.web.configurations
 
 import mc.oauth2.User
 import mc.oauth2.integration.AuthenticationService
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
  * @author Michael Chalabine
  */
 @Configuration
-class McOAuth2AuthenticationServiceConfigurer {
+class McOAuth2AuthenticationServiceConfiguration {
 
     @Bean
     fun authenticationService(): AuthenticationService {

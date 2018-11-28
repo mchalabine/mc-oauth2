@@ -3,7 +3,6 @@ package mc.oauth2.config.web.configurations
 import mc.oauth2.ROLE_ADMIN
 import mc.oauth2.ROLE_USER
 import mc.oauth2.URI_LOGIN
-import mc.oauth2.config.McOAuth2AuthenticationServiceConfigurer
 import mc.oauth2.config.PASSWORD
 import mc.oauth2.config.USERNAME
 import org.junit.jupiter.api.Assertions.*
@@ -41,7 +40,7 @@ import javax.servlet.Filter
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfigurer::class,
-    McOAuth2AuthenticationServiceConfigurer::class])
+    McOAuth2AuthenticationServiceConfiguration::class])
 internal class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
 
     @Autowired

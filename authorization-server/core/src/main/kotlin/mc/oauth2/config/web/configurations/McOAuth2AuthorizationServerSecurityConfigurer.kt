@@ -1,7 +1,6 @@
 package mc.oauth2.config.web.configurations
 
 import mc.oauth2.*
-import mc.oauth2.config.McOAuth2AuthenticationServiceConfigurer
 import mc.oauth2.providers.McOAuth2AuthenticationProvider
 import mc.oauth2.integration.AuthenticationService
 import org.springframework.boot.autoconfigure.security.SecurityProperties
@@ -30,7 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder
 @Configuration
 @EnableWebSecurity
 @Order(SecurityProperties.BASIC_AUTH_ORDER - 10)
-@Import(McOAuth2AuthenticationServiceConfigurer::class)
+@Import(McOAuth2AuthenticationServiceConfiguration::class)
 class McOAuth2AuthorizationServerSecurityConfigurer(
         private val authenticationService: AuthenticationService) : WebSecurityConfigurerAdapter() {
 
