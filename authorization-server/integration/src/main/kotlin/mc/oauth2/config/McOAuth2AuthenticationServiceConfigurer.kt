@@ -1,5 +1,6 @@
 package mc.oauth2.config
 
+import mc.oauth2.User
 import mc.oauth2.integration.AuthenticationService
 import mc.oauth2.support.integration.InMemoryAuthenticationService
 import org.springframework.context.annotation.Bean

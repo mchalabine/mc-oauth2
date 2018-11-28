@@ -1,4 +1,4 @@
-package mc.oauth2.config
+package mc.oauth2
 
 /**
  * @author Michael Chalabine
@@ -20,7 +20,8 @@ data class User private constructor(private val builder: UserBuilder) {
         this.credentials = builder.credentials
     }
 
-    private class UserBuilder : UserBuilderPrincipal, UserBuilderBuild, UserBuilderCredentials {
+    private class UserBuilder : UserBuilderPrincipal,
+        UserBuilderBuild, UserBuilderCredentials {
 
         internal lateinit var principal: Principal
         internal lateinit var credentials: Credentials

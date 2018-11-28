@@ -1,5 +1,7 @@
 package mc.oauth2.config
 
+import mc.oauth2.Credentials
+import mc.oauth2.Principal
 import mc.oauth2.integration.AuthenticationService
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

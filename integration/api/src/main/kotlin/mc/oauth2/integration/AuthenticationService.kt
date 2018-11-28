@@ -1,7 +1,7 @@
 package mc.oauth2.integration
 
-import mc.oauth2.config.Credentials
-import mc.oauth2.config.Principal
+import mc.oauth2.Credentials
+import mc.oauth2.Principal
 
 /**
  * @author Michael Chalabine

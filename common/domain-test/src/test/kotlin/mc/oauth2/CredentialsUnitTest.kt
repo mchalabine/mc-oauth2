@@ -1,5 +1,6 @@
-package mc.oauth2.config
+package mc.oauth2
 
+import mc.oauth2.config.USERNAME
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

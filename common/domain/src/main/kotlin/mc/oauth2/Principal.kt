@@ -1,4 +1,4 @@
-package mc.oauth2.config
+package mc.oauth2
 
 /**
  * @author Michael Chalabine
@@ -21,7 +21,8 @@ data class Principal private constructor(private val builder: PrincipalBuilder) 
         }
     }
 
-    private class PrincipalBuilder : PrincipalBuilderPrincipal, PrincipalBuilderBuild {
+    private class PrincipalBuilder : PrincipalBuilderPrincipal,
+        PrincipalBuilderBuild {
 
         lateinit var principle: String
 

@@ -1,4 +1,4 @@
-package mc.oauth2.config
+package mc.oauth2
 
 /**
  * @author Michael Chalabine
@@ -22,7 +22,8 @@ data class Credentials private constructor(private val builder: CredentialsBuild
         }
     }
 
-    private class CredentialsBuilder : CredentialsBuilderCredentials, CredentialsBuilderBuild {
+    private class CredentialsBuilder : CredentialsBuilderCredentials,
+        CredentialsBuilderBuild {
 
         internal lateinit var credentials: String
 
