@@ -1,9 +1,7 @@
 package mc.oauth2.config
 
+import mc.oauth2.config.providers.McOAuth2AuthenticationProvider
 import mc.oauth2.integration.AuthenticationService
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.SpringBootConfiguration
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
