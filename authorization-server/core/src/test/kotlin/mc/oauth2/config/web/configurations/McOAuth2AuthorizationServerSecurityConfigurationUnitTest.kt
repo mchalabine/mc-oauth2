@@ -39,9 +39,9 @@ import javax.servlet.Filter
 
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfigurer::class,
+@SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfiguration::class,
     McOAuth2AuthenticationServiceConfiguration::class])
-internal class McOAuth2AuthorizationServerSecurityConfigurerUnitTest {
+internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
 
     @Autowired
     lateinit var webApplicationContext: WebApplicationContext

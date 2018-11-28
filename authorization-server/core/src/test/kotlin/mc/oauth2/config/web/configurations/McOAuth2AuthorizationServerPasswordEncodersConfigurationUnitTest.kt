@@ -12,8 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
-@SpringBootTest(classes = [(McOAuth2AuthorizationServerPasswordEncodersConfigurer::class)])
-class McOAuth2AuthorizationServerPasswordEncodersConfigurerUnitTest {
+@SpringBootTest(classes = [(McOAuth2AuthorizationServerPasswordEncodersConfiguration::class)])
+class McOAuth2AuthorizationServerPasswordEncodersConfigurationUnitTest {
 
     @Autowired
     lateinit var context: ApplicationContext
