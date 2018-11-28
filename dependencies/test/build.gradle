@@ -1,16 +1,19 @@
 dependencies {
 
-    compile "org.springframework.security:spring-security-test:5.1.1.RELEASE"
+    compile("org.springframework.security:spring-security-test:5.1.1.RELEASE")
 
     compile("org.springframework.boot:spring-boot-starter-test:$springBootVersion") {
         exclude group: "junit", module: "junit"
+        exclude group: "org.assertj", module: "assertj-core"
     }
 
     compile("org.assertj:assertj-core:3.11.1")
 
-    compile "org.junit.jupiter:junit-jupiter-api:5.1.1"
+    compile("org.junit.jupiter:junit-jupiter-api:5.1.1")
 
-    compile "org.junit.jupiter:junit-jupiter-engine:5.1.1"
+    runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.1")
+
+    compile("io.mockk:mockk:1.8.13")
 
 }
 

@@ -3,16 +3,11 @@ package mc.oauth2
 /**
  * @author Michael Chalabine
  */
-data class Credentials private constructor(private val builder: CredentialsBuilder) {
+data class Credentials private constructor(private val credentials: String) {
 
-    private val credentials: String
-
-    init {
-        this.credentials = builder.credentials
-    }
+    private constructor(builder: CredentialsBuilder) : this(credentials = builder.credentials)
 
     companion object {
-
         fun valueOf(credentials: String): Credentials {
             return aCredentials().withCredentials(credentials).build()
         }
@@ -22,8 +17,7 @@ data class Credentials private constructor(private val builder: CredentialsBuild
         }
     }
 
-    private class CredentialsBuilder : CredentialsBuilderCredentials,
-        CredentialsBuilderBuild {
+    private class CredentialsBuilder : CredentialsBuilderCredentials, CredentialsBuilderBuild {
 
         internal lateinit var credentials: String
 

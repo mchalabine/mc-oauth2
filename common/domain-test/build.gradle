@@ -1,5 +1,6 @@
 configurations {
 
-    compile.extendsFrom(oauth2Domain, oauth2Spring, oauth2Test)
+    implementation.extendsFrom(oauth2Domain, oauth2Spring)
+    testImplementation.extendsFrom(oauth2Test)
 
 }

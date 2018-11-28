@@ -3,13 +3,9 @@ package mc.oauth2
 /**
  * @author Michael Chalabine
  */
-data class Principal private constructor(private val builder: PrincipalBuilder) {
+data class Principal private constructor(private val principal: String) {
 
-    private val principal: String
-
-    init {
-        this.principal = builder.principle
-    }
+    private constructor(builder: PrincipalBuilder) : this(principal = builder.principal)
 
     companion object {
         fun valueOf(principal: String): Principal {
@@ -24,10 +20,10 @@ data class Principal private constructor(private val builder: PrincipalBuilder) 
     private class PrincipalBuilder : PrincipalBuilderPrincipal,
         PrincipalBuilderBuild {
 
-        lateinit var principle: String
+        lateinit var principal: String
 
         override fun withPrincipal(value: String): PrincipalBuilderBuild {
-            this.principle = value
+            this.principal = value
             return self()
         }
 

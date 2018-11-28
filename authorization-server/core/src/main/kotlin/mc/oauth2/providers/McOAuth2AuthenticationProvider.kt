@@ -3,10 +3,13 @@ package mc.oauth2.providers
 import mc.oauth2.Credentials
 import mc.oauth2.Principal
 import mc.oauth2.ROLE_USER
+import mc.oauth2.integration.AuthenticationResult.UNAUTHENTICATED
 import mc.oauth2.integration.AuthenticationService
 import org.springframework.security.authentication.AuthenticationProvider
+import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
@@ -17,6 +20,7 @@ import kotlin.reflect.full.isSubclassOf
 class McOAuth2AuthenticationProvider(private val authenticationService: AuthenticationService) :
     AuthenticationProvider {
 
+    @Throws(AuthenticationException::class)
     override fun authenticate(authentication: Authentication): Authentication {
         val principal = getPrincipal(authentication)
         val credentials = getCredentials(authentication)
@@ -25,6 +29,9 @@ class McOAuth2AuthenticationProvider(private val authenticationService: Authenti
 
     private fun authenticate(p: Principal, c: Credentials): UsernamePasswordAuthenticationToken {
         val authenticationResult = authenticationService.authenticate(p, c)
+        if (UNAUTHENTICATED == authenticationResult) {
+            throw AuthenticationServiceException("")
+        }
         return UsernamePasswordAuthenticationToken(p, c,
                 arrayListOf(SimpleGrantedAuthority("ROLE_$ROLE_USER")))
     }

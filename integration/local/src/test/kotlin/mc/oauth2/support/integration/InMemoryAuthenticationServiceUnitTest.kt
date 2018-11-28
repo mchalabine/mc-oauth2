@@ -14,16 +14,16 @@ internal class InMemoryAuthenticationServiceUnitTest {
 
     private lateinit var authenticationService: InMemoryAuthenticationService
 
-    private val principal: Principal = Principal.valueOf(USERNAME)
+    private val principal: Principal = Principal.valueOf(TEST_USERNAME)
 
-    private val credentials: Credentials = Credentials.valueOf(PASSWORD)
+    private val credentials: Credentials = Credentials.valueOf(TEST_PASSWORD)
 
     @BeforeEach
     fun setUp() {
         authenticationService = InMemoryAuthenticationService.aService()
                 .withUser(User.aUser()
-                        .withPrincipal(USERNAME)
-                        .withCredentials(PASSWORD)
+                        .withPrincipal(TEST_USERNAME)
+                        .withCredentials(TEST_PASSWORD)
                         .build())
                 .build()
     }

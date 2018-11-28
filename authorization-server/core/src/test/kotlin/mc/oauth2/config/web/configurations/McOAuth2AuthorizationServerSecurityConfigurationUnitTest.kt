@@ -3,8 +3,8 @@ package mc.oauth2.config.web.configurations
 import mc.oauth2.ROLE_ADMIN
 import mc.oauth2.ROLE_USER
 import mc.oauth2.URI_LOGIN
-import mc.oauth2.config.PASSWORD
-import mc.oauth2.config.USERNAME
+import mc.oauth2.config.TEST_PASSWORD
+import mc.oauth2.config.TEST_USERNAME
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -190,7 +190,7 @@ internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
     }
 
     private fun getValidAuthenticationToken(): Authentication =
-            UsernamePasswordAuthenticationToken(USERNAME,
-                    PASSWORD)
+            UsernamePasswordAuthenticationToken(TEST_USERNAME,
+                    TEST_PASSWORD)
 
 }
