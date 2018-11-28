@@ -1,4 +1,4 @@
-package mc.oauth2.config
+package mc.oauth2.config.web.configurations
 
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue

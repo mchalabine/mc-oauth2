@@ -1,5 +1,6 @@
-package mc.oauth2.config
+package mc.oauth2.config.web.configurations
 
+import mc.oauth2.config.web.configurations.McOAuth2AuthorizationServerConfigurer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired

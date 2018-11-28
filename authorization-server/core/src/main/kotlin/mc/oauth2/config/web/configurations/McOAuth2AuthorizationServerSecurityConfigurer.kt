@@ -1,6 +1,7 @@
-package mc.oauth2.config
+package mc.oauth2.config.web.configurations
 
 import mc.oauth2.*
+import mc.oauth2.config.McOAuth2AuthenticationServiceConfigurer
 import mc.oauth2.providers.McOAuth2AuthenticationProvider
 import mc.oauth2.integration.AuthenticationService
 import org.springframework.boot.autoconfigure.security.SecurityProperties

@@ -1,4 +1,4 @@
-package mc.oauth2.config
+package mc.oauth2.config.web.configurations
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

@@ -1,6 +1,5 @@
-package mc.oauth2.config
+package mc.oauth2.config.web.configurations
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 
