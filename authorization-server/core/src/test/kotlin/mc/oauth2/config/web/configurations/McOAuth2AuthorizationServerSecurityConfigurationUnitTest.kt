@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.AuthenticationManager
@@ -22,6 +23,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
@@ -39,6 +41,7 @@ import javax.servlet.Filter
 
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ExtendWith(SpringExtension::class)
 @SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfiguration::class,
     McOAuth2AuthenticationServiceConfiguration::class])
 internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
