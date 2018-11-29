@@ -12,6 +12,8 @@ const val ROLE_ADMIN: String = "ADMIN"
 
 const val ROLE_USER: String = "USER"
 
+const val MSG_AUTHENTICATION_FAILURE = "Authentication failed"
+
 val URIS_ALLOWED = arrayOf(URI_LOGIN_ALL, "/resources/**", "/signup", "/about")
 
 val URIS_PROTECT = arrayOf("/authorize")
