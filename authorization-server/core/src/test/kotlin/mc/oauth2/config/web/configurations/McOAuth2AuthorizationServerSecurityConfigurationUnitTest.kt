@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -75,7 +76,7 @@ internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
     @Test
     fun testAuthenticationManagerRejectsAsExpectedWhereUserMatchesNot() {
         val token = getInvalidAuthenticationToken()
-        assertThrows(BadCredentialsException::class.java) {
+        assertThrows(AuthenticationServiceException::class.java) {
             authenticationManager.authenticate(token)
         }
     }
@@ -174,7 +175,7 @@ internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
     @Test
     fun testHttpSecurityAuthenticatesWithRoleUserAtPostAtLoginWhereUserMatches() {
         val token = getValidAuthenticationToken()
-        login(token).andExpect(authenticated().withRoles(ROLE_USER, ROLE_ADMIN))
+        login(token).andExpect(authenticated().withRoles(ROLE_USER))
     }
 
     @Test

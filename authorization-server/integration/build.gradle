@@ -12,5 +12,7 @@ dependencies {
 
     compile project(":mc-oauth2-spring-integration-local")
 
+    implementation project(":mc-oauth2-spring-common-domain-test")
+
 }
 
