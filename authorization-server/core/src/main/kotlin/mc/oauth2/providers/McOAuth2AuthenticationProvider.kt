@@ -63,10 +63,10 @@ class McOAuth2AuthenticationProvider(private val authenticationService: Authenti
     }
 
     private fun throwTheOnlyExceptionAllowed() {
-        throwExceptionThatHidesTheActualProblem()
+        throwExceptionThatMasksTheActualProblem()
     }
 
-    private fun throwExceptionThatHidesTheActualProblem() {
+    private fun throwExceptionThatMasksTheActualProblem() {
         throw AuthenticationServiceException(MSG_AUTHENTICATION_FAILURE)
     }
 
@@ -98,6 +98,5 @@ class McOAuth2AuthenticationProvider(private val authenticationService: Authenti
     private fun getSupportedTokenClass(): KClass<UsernamePasswordAuthenticationToken> {
         return UsernamePasswordAuthenticationToken::class
     }
-
 
 }
