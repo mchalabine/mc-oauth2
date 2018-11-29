@@ -185,8 +185,8 @@ internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
                 .andExpect(authenticated())
     }
 
-    private fun getValidAuthenticationToken(): Authentication =
-            UsernamePasswordAuthenticationToken(TEST_USERNAME,
-                    TEST_PASSWORD)
+    private fun getValidAuthenticationToken(): Authentication {
+        return UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD)
+    }
 
 }

@@ -40,7 +40,7 @@ internal class McOAuth2AuthenticationProviderUnitTest {
     }
 
     @Test
-    fun `test throws where principal match and credentials not`() {
+    fun `test rejects where principal match and credentials not`() {
         val authentication = getInvalidAuthenticationToken()
         assertThatThrownBy { provider.authenticate(authentication) }.isInstanceOf(
                 AuthenticationException::class.java)

@@ -2,22 +2,36 @@ package mc.oauth2.support.integration
 
 import mc.oauth2.User
 import mc.oauth2.integration.AuthenticationResult
-import mc.oauth2.integration.AuthenticationResult.AUTHENTICATED
 import mc.oauth2.integration.AuthenticationService
 import mc.oauth2.Credentials
 import mc.oauth2.Principal
+import mc.oauth2.integration.AuthenticationResult.AUTHENTICATED
+import mc.oauth2.integration.AuthenticationResult.UNAUTHENTICATED
 
 /**
  * @author Michael Chalabine
  */
-class InMemoryAuthenticationService : AuthenticationService {
+class InMemoryAuthenticationService private constructor(
+        private val credentialsByPrincipal: Map<Principal, Credentials>) : AuthenticationService {
 
-    private constructor(builder: InMemoryAuthenticationServiceBuilder){
-    }
+    private constructor(builder: InMemoryAuthenticationServiceBuilder) : this(
+            credentialsByPrincipal = builder.credentialsByPrinciple)
 
     override fun authenticate(principal: Principal,
                               credentials: Credentials): AuthenticationResult {
-        return AUTHENTICATED
+        val expectedCredentials = getCredentials(principal)
+        return authenticate(credentials, expectedCredentials)
+    }
+
+    private fun authenticate(actual: Credentials, expected: Credentials?): AuthenticationResult {
+        return when (actual) {
+            expected -> AUTHENTICATED
+            else -> UNAUTHENTICATED
+        }
+    }
+
+    private fun getCredentials(principal: Principal): Credentials? {
+        return credentialsByPrincipal.getOrDefault(principal, null)
     }
 
     companion object {
@@ -26,14 +40,14 @@ class InMemoryAuthenticationService : AuthenticationService {
         }
     }
 
-    class InMemoryAuthenticationServiceBuilder : InMemoryAuthenticationServiceBuilderUser,
+    internal class InMemoryAuthenticationServiceBuilder : InMemoryAuthenticationServiceBuilderUser,
         InMemoryAuthenticationServiceBuilderBuild {
 
         override fun build(): InMemoryAuthenticationService {
             return InMemoryAuthenticationService(this)
         }
 
-        private val credentialsByPrinciple: MutableMap<Principal, Credentials> = HashMap()
+        internal val credentialsByPrinciple: MutableMap<Principal, Credentials> = HashMap()
 
         override fun withUser(user: User): InMemoryAuthenticationServiceBuilderBuild {
             this.credentialsByPrinciple.putIfAbsent(user.principal, user.credentials)

@@ -17,7 +17,7 @@ class McOAuth2AuthenticationServiceConfiguration {
         return InMemoryAuthenticationService.aService()
                 .withUser(User.aUser()
                         .withPrincipal("my-principal")
-                        .withCredentials("my-credentials")
+                        .withCredentials("my-secret")
                         .build())
                 .build()
     }
