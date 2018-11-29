@@ -102,8 +102,9 @@ class McOAuth2AuthorizationServerSecurityConfiguration(
     }
 
     private fun getOAuth2AuthorizationEndpointPath(uriBuilder: UriComponentsBuilder,
-                                                   mvcMetaData: MethodInvocationInfo) =
-            MvcUriComponentsBuilder.fromMethodCall(uriBuilder, mvcMetaData).build().path!!
+                                                   mvcMetaData: MethodInvocationInfo): String {
+        return MvcUriComponentsBuilder.fromMethodCall(uriBuilder, mvcMetaData).build().path!!
+                                                   }
 
     private fun getOAuth2AuthorizationEndpointMvcMetaData(): MethodInvocationInfo {
         val mock = getOAuth2AuthorizationEndpointMock()
