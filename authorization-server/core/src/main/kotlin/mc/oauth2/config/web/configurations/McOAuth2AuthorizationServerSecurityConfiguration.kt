@@ -92,7 +92,9 @@ class McOAuth2AuthorizationServerSecurityConfiguration(
         return getOAuth2AuthorizationEndpointPath(builder)
     }
 
-    private fun getEmptyUriComponentsBuilder() = UriComponentsBuilder.fromPath("/")
+    private fun getEmptyUriComponentsBuilder(): UriComponentsBuilder {
+        return UriComponentsBuilder.fromPath("/")
+    }
 
     private fun getOAuth2AuthorizationEndpointPath(uriBuilder: UriComponentsBuilder): String {
         val metaData = getOAuth2AuthorizationEndpointMvcMetaData()
