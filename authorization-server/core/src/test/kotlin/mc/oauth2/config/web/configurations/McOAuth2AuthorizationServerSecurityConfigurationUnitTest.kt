@@ -63,13 +63,6 @@ internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
                 .apply { SecurityMockMvcConfigurers.springSecurity() }
                 .addFilter<DefaultMockMvcBuilder>(springSecurityFilterChain)
                 .build()
-        authenticationManager = webApplicationContext.getBean(AuthenticationManager::class.java)
-    }
-
-    @Test
-    fun testApplicationContextContainsAuthenticationManager() {
-        val manager = webApplicationContext.getBean(AuthenticationManager::class.java)
-        assertNotNull(manager)
     }
 
     @Test
