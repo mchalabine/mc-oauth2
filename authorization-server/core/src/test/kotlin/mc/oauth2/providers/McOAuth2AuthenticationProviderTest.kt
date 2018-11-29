@@ -39,6 +39,19 @@ internal class McOAuth2AuthenticationProviderUnitTest {
         assertAuthenticated(provider.authenticate(authentication))
     }
 
+    @Test
+    fun `test throws where principal match and credentials not`() {
+        val authentication = getInvalidAuthenticationToken()
+        assertThatThrownBy { provider.authenticate(authentication) }.isInstanceOf(
+                AuthenticationException::class.java)
+    }
+
+    @Test
+    fun `test supports expected authentication token type`() {
+        val actual: Boolean = provider.supports(getExpectedAuthenticationTokenType())
+        assertThat(actual).isTrue()
+    }
+
     private fun assertAuthenticated(actual: Authentication) {
         assertThat(actual.isAuthenticated).isTrue()
     }
@@ -46,21 +59,8 @@ internal class McOAuth2AuthenticationProviderUnitTest {
     private fun getValidAuthenticationToken() =
             UsernamePasswordAuthenticationToken(TEST_PRINCIPAL, TEST_CREDENTIALS)
 
-    @Test
-    fun `test fails to authenticate where principal match and credentials does not`() {
-        val authentication = getInvalidAuthenticationToken()
-        assertThatThrownBy { provider.authenticate(authentication) }.isInstanceOf(
-                AuthenticationException::class.java)
-    }
-
     private fun getInvalidAuthenticationToken() =
             UsernamePasswordAuthenticationToken(TEST_PRINCIPAL, "other")
-
-    @Test
-    fun `test supports expected authentication token type`() {
-        val actual: Boolean = provider.supports(getExpectedAuthenticationTokenType())
-        assertThat(actual).isTrue()
-    }
 
     private fun getExpectedAuthenticationTokenType(): Class<UsernamePasswordAuthenticationToken> {
         return UsernamePasswordAuthenticationToken::class.java
