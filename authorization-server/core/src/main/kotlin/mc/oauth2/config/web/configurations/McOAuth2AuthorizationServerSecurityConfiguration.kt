@@ -41,8 +41,7 @@ class McOAuth2AuthorizationServerSecurityConfiguration(
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        val loginAuthenticator = getLoginAuthenticationProvider()
-        auth.authenticationProvider(loginAuthenticator)
+        configureLoginAuthenticationProvider(auth)
     }
 
     @Throws(Exception::class)
@@ -56,6 +55,11 @@ class McOAuth2AuthorizationServerSecurityConfiguration(
         configureLogout(http)
         configureErrorHandling(http)
         configureUseOfHeaders(http)
+    }
+
+    private fun configureLoginAuthenticationProvider(auth: AuthenticationManagerBuilder) {
+        val loginAuthenticator = getLoginAuthenticationProvider()
+        auth.authenticationProvider(loginAuthenticator)
     }
 
     private fun getLoginAuthenticationProvider(): AuthenticationProvider {
