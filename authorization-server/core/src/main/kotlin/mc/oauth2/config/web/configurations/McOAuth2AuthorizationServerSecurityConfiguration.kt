@@ -1,7 +1,7 @@
 package mc.oauth2.config.web.configurations
 
 import mc.oauth2.*
-import mc.oauth2.providers.McOAuth2AuthenticationProvider
+import mc.oauth2.providers.McOAuth2UserAuthenticationProvider
 import mc.oauth2.integration.AuthenticationService
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.context.annotation.Bean
@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
@@ -64,7 +63,7 @@ class McOAuth2AuthorizationServerSecurityConfiguration(
     }
 
     private fun getLoginAuthenticationProvider(): AuthenticationProvider {
-        return McOAuth2AuthenticationProvider(authenticationService)
+        return McOAuth2UserAuthenticationProvider(authenticationService)
     }
 
     private fun init(http: HttpSecurity) {

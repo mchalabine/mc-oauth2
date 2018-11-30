@@ -20,7 +20,7 @@ import kotlin.reflect.full.isSubclassOf
 /**
  * @author Michael Chalabine
  */
-class McOAuth2AuthenticationProvider(
+class McOAuth2UserAuthenticationProvider(
         private val authenticationService: AuthenticationService) : AuthenticationProvider {
 
     @Throws(AuthenticationException::class)
