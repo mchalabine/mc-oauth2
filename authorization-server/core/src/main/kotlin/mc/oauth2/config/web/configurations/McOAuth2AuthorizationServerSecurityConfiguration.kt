@@ -29,7 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder
 @Configuration
 @EnableWebSecurity
 @Order(SecurityProperties.BASIC_AUTH_ORDER - 10)
-@Import(*[McOAuth2AuthenticationServiceConfiguration::class])
+@Import(McOAuth2AuthenticationServiceConfiguration::class)
 class McOAuth2AuthorizationServerSecurityConfiguration(
         private val authenticationService: AuthenticationService) : WebSecurityConfigurerAdapter() {
 
