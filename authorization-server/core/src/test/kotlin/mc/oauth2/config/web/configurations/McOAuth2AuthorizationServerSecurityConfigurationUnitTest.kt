@@ -1,11 +1,11 @@
 package mc.oauth2.config.web.configurations
 
-import mc.oauth2.ROLE_ADMIN
 import mc.oauth2.ROLE_USER
 import mc.oauth2.URI_LOGIN
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_USERNAME
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationServiceException
-import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -48,13 +47,14 @@ import javax.servlet.Filter
 internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
 
     @Autowired
-    lateinit var webApplicationContext: WebApplicationContext
+    lateinit var authenticationManager: AuthenticationManager
 
     @Autowired
     lateinit var springSecurityFilterChain: Filter
 
     @Autowired
-    lateinit var authenticationManager: AuthenticationManager
+    lateinit var webApplicationContext: WebApplicationContext
+
 
     lateinit var mockMvc: MockMvc
 

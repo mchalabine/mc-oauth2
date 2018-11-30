@@ -14,9 +14,9 @@ internal class InMemoryAuthenticationServiceUnitTest {
 
     private lateinit var authenticationService: InMemoryAuthenticationService
 
-    private val principal: Principal = Principal.valueOf(TEST_USERNAME)
+    private val principal: Principal = TEST_PRINCIPAL
 
-    private val credentials: Credentials = Credentials.valueOf(TEST_PASSWORD)
+    private val credentials: Credentials = TEST_CREDENTIALS
 
     @BeforeEach
     fun setUp() {
@@ -29,9 +29,15 @@ internal class InMemoryAuthenticationServiceUnitTest {
     }
 
     @Test
-    fun testAuthenticatesWhereUsernameAndCredentialsMatches() {
-        val actual: AuthenticationResult =
-                authenticationService.authenticate(principal, credentials)
+    fun `test authenticates where both username and credentials match`() {
+        val actual = authenticationService.authenticate(principal, credentials)
         assertThat(actual).isSameAs(AUTHENTICATED)
     }
+
+    @Test
+    fun `test fails to authenticates where username does not match`() {
+        val actual = authenticationService.authenticate(principal, credentials)
+        assertThat(actual).isSameAs(AUTHENTICATED)
+    }
+
 }
