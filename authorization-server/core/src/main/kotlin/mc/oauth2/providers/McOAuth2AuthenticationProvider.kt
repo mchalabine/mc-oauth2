@@ -20,8 +20,8 @@ import kotlin.reflect.full.isSubclassOf
 /**
  * @author Michael Chalabine
  */
-class McOAuth2AuthenticationProvider(private val authenticationService: AuthenticationService) :
-    AuthenticationProvider {
+class McOAuth2AuthenticationProvider(
+        private val authenticationService: AuthenticationService) : AuthenticationProvider {
 
     @Throws(AuthenticationException::class)
     override fun authenticate(authentication: Authentication): Authentication {
