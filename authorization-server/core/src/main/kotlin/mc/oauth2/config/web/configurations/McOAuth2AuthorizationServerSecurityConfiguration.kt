@@ -1,7 +1,7 @@
 package mc.oauth2.config.web.configurations
 
 import mc.oauth2.*
-import mc.oauth2.providers.McOAuth2UserAuthenticationProvider
+import mc.oauth2.providers.McOAuth2DelegatingAuthenticationProvider
 import mc.oauth2.integration.AuthenticationService
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.context.annotation.Bean
@@ -63,7 +63,7 @@ class McOAuth2AuthorizationServerSecurityConfiguration(
     }
 
     private fun getLoginAuthenticationProvider(): AuthenticationProvider {
-        return McOAuth2UserAuthenticationProvider(authenticationService)
+        return McOAuth2DelegatingAuthenticationProvider(authenticationService)
     }
 
     private fun init(http: HttpSecurity) {

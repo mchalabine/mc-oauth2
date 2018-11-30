@@ -14,11 +14,11 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal class McOAuth2UserAuthenticationProviderUnitTest {
+internal class McOAuth2DelegatingAuthenticationProviderUnitTest {
 
     private val authenticationService: AuthenticationService = mockk<AuthenticationService>()
 
-    private val provider = McOAuth2UserAuthenticationProvider(authenticationService)
+    private val provider = McOAuth2DelegatingAuthenticationProvider(authenticationService)
 
     @BeforeEach
     fun beforeEach() {

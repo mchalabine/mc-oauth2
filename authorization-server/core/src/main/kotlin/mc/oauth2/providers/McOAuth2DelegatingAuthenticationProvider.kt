@@ -18,9 +18,11 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 /**
+ * Delegates to AuthenticationService.
+ *
  * @author Michael Chalabine
  */
-class McOAuth2UserAuthenticationProvider(
+class McOAuth2DelegatingAuthenticationProvider(
         private val authenticationService: AuthenticationService) : AuthenticationProvider {
 
     @Throws(AuthenticationException::class)
@@ -83,17 +85,21 @@ class McOAuth2UserAuthenticationProvider(
 
     private fun getPrincipal(principal: Any) = getPrincipal(principal.toString())
 
-    private fun getCredentials(credentials: String): Credentials = Credentials.valueOf(credentials)
-
-    private fun getPrincipal(principal: String): Principal = Principal.valueOf(principal)
+    private fun getPrincipal(principal: String) = Principal.valueOf(principal)
 
     private fun getKotlinClass(authentication: Class<*>) = authentication.kotlin
 
     private fun isAuthenticated(authenticationResult: AuthenticationResult) =
             AUTHENTICATED == authenticationResult
 
-    private fun getCredentials(authentication: Authentication) =
-            getCredentials(authentication.credentials.toString())
+    private fun getCredentials(authentication: Authentication): Credentials {
+        val credentials = authentication.credentials
+        return getCredentials(credentials)
+    }
+
+    private fun getCredentials(credentials: Any) = getCredentials(credentials.toString())
+
+    private fun getCredentials(credentials: String) = Credentials.valueOf(credentials)
 
     private fun getSupportedTokenClass(): KClass<UsernamePasswordAuthenticationToken> {
         return UsernamePasswordAuthenticationToken::class
