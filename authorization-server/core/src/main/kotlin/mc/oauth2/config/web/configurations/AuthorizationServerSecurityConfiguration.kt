@@ -27,8 +27,8 @@ import org.springframework.web.util.UriComponentsBuilder
 @Configuration
 @EnableWebSecurity
 @Order(SecurityProperties.BASIC_AUTH_ORDER - 10)
-@Import(McOAuth2DelegatingAuthenticationProviderConfiguration::class)
-class McOAuth2AuthorizationServerSecurityConfiguration(
+@Import(DelegatingAuthenticationProviderConfiguration::class)
+class AuthorizationServerSecurityConfiguration(
         private val userAuthenticationProvider: AuthenticationProvider) :
     WebSecurityConfigurerAdapter() {
 

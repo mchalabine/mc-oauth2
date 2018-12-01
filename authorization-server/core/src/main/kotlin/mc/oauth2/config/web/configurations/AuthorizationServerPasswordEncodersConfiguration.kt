@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
  * @author Michael Chalabine
  */
 @Configuration
-class McOAuth2AuthorizationServerPasswordEncodersConfiguration {
+class AuthorizationServerPasswordEncodersConfiguration {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {

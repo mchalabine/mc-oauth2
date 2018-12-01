@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration
  * @author Michael Chalabine
  */
 @Configuration
-class McOAuth2AuthenticationServiceConfiguration {
+class AuthenticationServiceConfiguration {
 
     @Bean
     fun authenticationService(): AuthenticationService {

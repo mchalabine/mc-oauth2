@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.AuthenticationManager
@@ -23,7 +22,6 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
-import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -39,8 +37,8 @@ import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.Filter
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfiguration::class])
-internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
+@SpringBootTest(classes = [AuthorizationServerSecurityConfiguration::class])
+internal class AuthorizationServerSecurityConfigurationUnitTest {
 
     @Autowired
     lateinit var authenticationManager: AuthenticationManager

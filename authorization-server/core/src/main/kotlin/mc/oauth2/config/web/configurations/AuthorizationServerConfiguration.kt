@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Profile
  * @author Michael Chalabine
  */
 @Configuration
-@Import(McOAuth2AuthorizationServerSecurityConfiguration::class)
+@Import(AuthorizationServerSecurityConfiguration::class)
 @Profile(Profiles.IN_MEM)
-class McOAuth2AuthorizationServerConfiguration
+class AuthorizationServerConfiguration
