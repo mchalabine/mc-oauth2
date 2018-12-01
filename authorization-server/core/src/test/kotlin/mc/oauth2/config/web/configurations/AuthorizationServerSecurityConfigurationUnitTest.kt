@@ -52,9 +52,6 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
                 .build()
     }
 
-    private fun getInvalidAuthenticationToken(): UsernamePasswordAuthenticationToken =
-            UsernamePasswordAuthenticationToken("user1", "password")
-
     @Test
     fun testHttpSecurityAllowsGetLogin() {
         mockMvc.perform(get(URI_LOGIN))
@@ -101,19 +98,6 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
         mockMvc.perform(post(URI_LOGIN).with(csrf())).andExpect(status().is3xxRedirection)
     }
 
-    private fun login(token: Authentication): ResultActions {
-        val csrf: RequestPostProcessor = csrf()
-        return login(token, csrf)
-    }
-
-    private fun login(token: Authentication, csrf: RequestPostProcessor): ResultActions {
-        return mockMvc.perform(post(URI_LOGIN)
-                .param("username", token.principal.toString())
-                .param("password", token.credentials.toString())
-                .with(csrf))
-                .andDo(print())
-    }
-
     @Test
     fun testHttpSecurityReportsNoAuthoritiesAtPostAtLoginWhereInvalidToken() {
         val token = getInvalidAuthenticationToken()
@@ -147,5 +131,22 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
     private fun getValidAuthenticationToken(): Authentication {
         return UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD)
     }
+
+    private fun getInvalidAuthenticationToken(): UsernamePasswordAuthenticationToken =
+            UsernamePasswordAuthenticationToken("user1", "password")
+
+    private fun login(token: Authentication): ResultActions {
+        val csrf: RequestPostProcessor = csrf()
+        return login(token, csrf)
+    }
+
+    private fun login(token: Authentication, csrf: RequestPostProcessor): ResultActions {
+        return mockMvc.perform(post(URI_LOGIN)
+                .param("username", token.principal.toString())
+                .param("password", token.credentials.toString())
+                .with(csrf))
+                .andDo(print())
+    }
+
 
 }
