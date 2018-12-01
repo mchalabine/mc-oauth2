@@ -24,7 +24,6 @@ import org.springframework.security.test.web.servlet.response.SecurityMockMvcRes
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -39,11 +38,8 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.Filter
 
-@WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ExtendWith(SpringExtension::class)
-@SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfiguration::class,
-    McOAuth2AuthenticationServiceConfiguration::class])
+@SpringBootTest(classes = [McOAuth2AuthorizationServerSecurityConfiguration::class])
 internal class McOAuth2AuthorizationServerSecurityConfigurationUnitTest {
 
     @Autowired

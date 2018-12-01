@@ -1,8 +1,6 @@
 package mc.oauth2.config.web.configurations
 
 import mc.oauth2.*
-import mc.oauth2.providers.McOAuth2DelegatingAuthenticationProvider
-import mc.oauth2.integration.AuthenticationService
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -29,9 +27,10 @@ import org.springframework.web.util.UriComponentsBuilder
 @Configuration
 @EnableWebSecurity
 @Order(SecurityProperties.BASIC_AUTH_ORDER - 10)
-@Import(McOAuth2AuthenticationServiceConfiguration::class)
+@Import(McOAuth2DelegatingAuthenticationProviderConfiguration::class)
 class McOAuth2AuthorizationServerSecurityConfiguration(
-        private val authenticationService: AuthenticationService) : WebSecurityConfigurerAdapter() {
+        private val userAuthenticationProvider: AuthenticationProvider) :
+    WebSecurityConfigurerAdapter() {
 
     @Bean
     @Throws(Exception::class)
@@ -41,7 +40,7 @@ class McOAuth2AuthorizationServerSecurityConfiguration(
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        configureLoginAuthenticationProvider(auth)
+        configureUserAuthenticationProvider(auth)
     }
 
     @Throws(Exception::class)
@@ -57,13 +56,8 @@ class McOAuth2AuthorizationServerSecurityConfiguration(
         configureUseOfHeaders(http)
     }
 
-    private fun configureLoginAuthenticationProvider(auth: AuthenticationManagerBuilder) {
-        val loginAuthenticator = getLoginAuthenticationProvider()
-        auth.authenticationProvider(loginAuthenticator)
-    }
-
-    private fun getLoginAuthenticationProvider(): AuthenticationProvider {
-        return McOAuth2DelegatingAuthenticationProvider(authenticationService)
+    private fun configureUserAuthenticationProvider(auth: AuthenticationManagerBuilder) {
+        auth.authenticationProvider(userAuthenticationProvider)
     }
 
     private fun init(http: HttpSecurity) {
