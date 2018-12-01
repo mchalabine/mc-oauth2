@@ -4,18 +4,13 @@ import mc.oauth2.ROLE_USER
 import mc.oauth2.URI_LOGIN
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_USERNAME
-import org.junit.jupiter.api.Assertions.assertThrows
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
@@ -41,9 +36,6 @@ import javax.servlet.Filter
 internal class AuthorizationServerSecurityConfigurationUnitTest {
 
     @Autowired
-    lateinit var authenticationManager: AuthenticationManager
-
-    @Autowired
     lateinit var springSecurityFilterChain: Filter
 
     @Autowired
@@ -60,21 +52,6 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
                 .build()
     }
 
-    @Test
-    fun testAuthenticationManagerAuthenticatesAsExpectedWhereUserMatches() {
-        val token = getValidAuthenticationToken()
-        val actual = authenticationManager.authenticate(token)
-        assertTrue(actual.isAuthenticated)
-    }
-
-    @Test
-    fun testAuthenticationManagerRejectsAsExpectedWhereUserMatchesNot() {
-        val token = getInvalidAuthenticationToken()
-        assertThrows(AuthenticationServiceException::class.java) {
-            authenticationManager.authenticate(token)
-        }
-    }
-
     private fun getInvalidAuthenticationToken(): UsernamePasswordAuthenticationToken =
             UsernamePasswordAuthenticationToken("user1", "password")
 
@@ -89,19 +66,6 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
     fun testHttpSecurityAllowsGetAuthorize() {
         mockMvc.perform(get("/oauth/authorize"))
                 .andExpect(status().is3xxRedirection)
-    }
-
-    @Test
-    fun testAuthenticationManagerAuthenticatesAsExpectedRoleWhereUserMatches() {
-        val token = getValidAuthenticationToken()
-        val actual = authenticationManager.authenticate(token)
-        val expected = getExpectedAuthority()
-        assertTrue(actual.authorities.contains(expected))
-    }
-
-    private fun getExpectedAuthority(): SimpleGrantedAuthority {
-        val expectedRoleName = "ROLE_$ROLE_USER"
-        return SimpleGrantedAuthority(expectedRoleName)
     }
 
     @Test

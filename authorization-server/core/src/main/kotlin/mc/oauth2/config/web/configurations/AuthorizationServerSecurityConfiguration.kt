@@ -2,11 +2,9 @@ package mc.oauth2.config.web.configurations
 
 import mc.oauth2.*
 import org.springframework.boot.autoconfigure.security.SecurityProperties
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.core.annotation.Order
-import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -31,12 +29,6 @@ import org.springframework.web.util.UriComponentsBuilder
 class AuthorizationServerSecurityConfiguration(
         private val userAuthenticationProvider: AuthenticationProvider) :
     WebSecurityConfigurerAdapter() {
-
-    @Bean
-    @Throws(Exception::class)
-    override fun authenticationManagerBean(): AuthenticationManager {
-        return super.authenticationManagerBean()
-    }
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
