@@ -16,7 +16,7 @@ import org.springframework.security.core.AuthenticationException
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class DelegatingAuthenticationProviderUnitTest {
 
-    private val authenticationService: AuthenticationService = mockk<AuthenticationService>()
+    private val authenticationService: AuthenticationService = mockk()
 
     private val provider = DelegatingAuthenticationProvider(authenticationService)
 
