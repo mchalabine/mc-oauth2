@@ -22,15 +22,12 @@ internal class DelegatingAuthenticationProviderUnitTest {
 
     @BeforeEach
     fun beforeEach() {
-        every { authenticationService.authenticate(any(), any()) }
-                .returns(AuthenticationResult.UNAUTHENTICATED)
-        every { authenticationService.authenticate(TEST_PRINCIPAL, TEST_CREDENTIALS) }
-                .returns(AuthenticationResult.AUTHENTICATED)
+        stageAuthenticationServiceMock()
     }
 
     @AfterEach
     fun afterEach() {
-        clearMocks(authenticationService)
+        cleanAuthenticationServiceMock()
     }
 
     @Test
@@ -65,4 +62,16 @@ internal class DelegatingAuthenticationProviderUnitTest {
     private fun getExpectedAuthenticationTokenType(): Class<UsernamePasswordAuthenticationToken> {
         return UsernamePasswordAuthenticationToken::class.java
     }
+
+    private fun stageAuthenticationServiceMock() {
+        every { authenticationService.authenticate(any(), any()) }
+                .returns(AuthenticationResult.UNAUTHENTICATED)
+        every { authenticationService.authenticate(TEST_PRINCIPAL, TEST_CREDENTIALS) }
+                .returns(AuthenticationResult.AUTHENTICATED)
+    }
+
+    private fun cleanAuthenticationServiceMock() {
+        clearMocks(authenticationService)
+    }
+
 }
