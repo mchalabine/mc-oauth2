@@ -9,6 +9,8 @@ dependencies {
 
     compile(project(":mc-oauth2-spring-authorization-server-integration"))
 
+    compile(project(":mc-oauth2-spring-authorization-server-domain"))
+
     compile(project(":mc-oauth2-spring-common-domain-test"))
 
 }
