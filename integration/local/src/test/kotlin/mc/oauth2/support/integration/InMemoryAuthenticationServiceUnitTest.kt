@@ -3,7 +3,10 @@ package mc.oauth2.support.integration
 import mc.oauth2.Credentials
 import mc.oauth2.Principal
 import mc.oauth2.User
-import mc.oauth2.config.*
+import mc.oauth2.config.TEST_CREDENTIALS
+import mc.oauth2.config.TEST_PASSWORD
+import mc.oauth2.config.TEST_PRINCIPAL
+import mc.oauth2.config.TEST_USERNAME
 import mc.oauth2.integration.AuthenticationResult.AUTHENTICATED
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
