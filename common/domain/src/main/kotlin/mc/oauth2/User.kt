@@ -3,21 +3,16 @@ package mc.oauth2
 /**
  * @author Michael Chalabine
  */
-data class User private constructor(private val builder: UserBuilder) {
+data class User private constructor(val principal: Principal,
+                                    val credentials: Credentials) {
 
-    val principal: Principal
-
-    val credentials: Credentials
+    private constructor(builder: UserBuilder) : this(principal = builder.principal,
+            credentials = builder.credentials)
 
     companion object {
         fun aUser(): UserBuilderPrincipal {
             return UserBuilder()
         }
-    }
-
-    init {
-        this.principal = builder.principal
-        this.credentials = builder.credentials
     }
 
     private class UserBuilder : UserBuilderPrincipal,

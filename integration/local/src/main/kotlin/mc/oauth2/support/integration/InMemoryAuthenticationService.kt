@@ -57,7 +57,6 @@ class InMemoryAuthenticationService private constructor(
         private fun self(): InMemoryAuthenticationServiceBuilder {
             return this
         }
-
     }
 
     interface InMemoryAuthenticationServiceBuilderUser {
