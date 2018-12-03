@@ -6,7 +6,6 @@ import mc.oauth2.MSG_AUTHENTICATION_FAILURE
 import mc.oauth2.Profiles
 import mc.oauth2.ROLE_USER
 import mc.oauth2.URI_LOGIN
-import mc.oauth2.config.TEST_IP
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_ROLES
 import mc.oauth2.config.TEST_USERNAME
@@ -19,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
-import org.springframework.http.HttpRequest
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.AuthenticationServiceException
@@ -35,7 +33,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.RequestPostProcessor
@@ -72,37 +69,42 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
     }
 
     @Test
-    fun testHttpSecurityAllowsGetLogin() {
+    fun `test can GET Login`() {
         mockMvc.perform(get(URI_LOGIN))
                 .andDo(print())
                 .andExpect(status().is4xxClientError)
     }
 
     @Test
-    fun testHttpSecurityAllowsGetAuthorize() {
+    fun `test can GET Authorize`() {
         mockMvc.perform(get("/oauth/authorize"))
                 .andExpect(status().is3xxRedirection)
     }
 
     @Test
-    fun testHttpSecurityAuthenticatesAtPostAtLoginWhereUserMatches() {
+    fun `test authenticates where user matches`() {
         val token: Authentication = getValidAuthenticationToken()
         login(token).andExpect(authenticated())
     }
 
     @Test
-    fun testHttpSecurityReturnsExpectedStatusAtPostAtLoginWhereUserMatches() {
+    fun `test returns expected status @POST @LOGIN where user matches`() {
         val token: Authentication = getValidAuthenticationToken()
         login(token).andExpect(status().is3xxRedirection)
     }
 
     @Test
-    fun testCsrfRejectsRequestWhereCsrfTokenPresentNot() {
+    fun `test CSRF rejects request @LOGIN where CSRF token missing`() {
         mockMvc.perform(post(URI_LOGIN)).andExpect(status().isForbidden)
     }
 
     @Test
-    fun testCsrfAllowsRequestToAuthorizationPathWhereCsrfTokenPresentNot() {
+    fun `test CSRF allows request @LOGIN where CSRF token present`() {
+        mockMvc.perform(post(URI_LOGIN).with(csrf())).andExpect(status().is3xxRedirection)
+    }
+
+    @Test
+    fun `test CSRF allows request to @Authorization where CSRF token missing`() {
         val builder = UriComponentsBuilder.fromPath("/")
         val authorize = MvcUriComponentsBuilder
                 .on(AuthorizationEndpoint::class.java)
@@ -113,12 +115,7 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
     }
 
     @Test
-    fun testCsrfAllowsRequestWhereCsrfTokenPresent() {
-        mockMvc.perform(post(URI_LOGIN).with(csrf())).andExpect(status().is3xxRedirection)
-    }
-
-    @Test
-    fun testHttpSecurityReportsNoAuthoritiesAtPostAtLoginWhereInvalidToken() {
+    fun `test receives no authorities from post @LOGIN where authentication invalid`() {
         val token = getInvalidAuthenticationToken()
         val expected = authenticated().withAuthentication(token)
         mockMvc.perform(post(URI_LOGIN)
@@ -128,19 +125,19 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
     }
 
     @Test
-    fun testHttpSecurityAuthenticatesNotAtPostAtLoginWhereUserMatchesNot() {
+    fun `test rejects post @LOGIN where user invalid`() {
         val token = getInvalidAuthenticationToken()
         login(token).andExpect(unauthenticated())
     }
 
     @Test
-    fun testHttpSecurityAuthenticatesWithRoleUserAtPostAtLoginWhereUserMatches() {
+    fun `test authenticates with role user @LOGIN where user matches`() {
         val token = getValidAuthenticationToken()
         login(token).andExpect(authenticated().withRoles(ROLE_USER))
     }
 
     @Test
-    fun testHttpSecurityAllowsAuthorize() {
+    fun `test allows to post @AUTHORIZE`() {
         val authenticationToken = getValidAuthenticationToken()
         mockMvc.perform(post("/authorize")
                 .with(authentication(authenticationToken)))
