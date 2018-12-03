@@ -24,13 +24,13 @@ internal class InMemoryAuthenticationServiceUnitTest {
     private val credentials: Credentials = TEST_CREDENTIALS
 
     @Test
-    fun `test authenticates where both username and credentials match`() {
+    fun `test authenticates where username and credentials match`() {
         val actual = authenticationService.authenticate(principal, credentials)
         assertAuthenticated(actual)
     }
 
     @Test
-    fun `test fails to authenticates where username does not match`() {
+    fun `test authentication fails where username does not match`() {
         val principal = getInvalidPrincipal()
         val actual = authenticationService.authenticate(principal, credentials)
         assertUnauthenticated(actual)
