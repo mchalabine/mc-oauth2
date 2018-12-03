@@ -1,14 +1,28 @@
 package mc.oauth2.config.web.configurations
 
+import io.mockk.every
+import io.mockk.mockk
+import mc.oauth2.MSG_AUTHENTICATION_FAILURE
+import mc.oauth2.Profiles
 import mc.oauth2.ROLE_USER
 import mc.oauth2.URI_LOGIN
+import mc.oauth2.config.TEST_IP
 import mc.oauth2.config.TEST_PASSWORD
+import mc.oauth2.config.TEST_ROLES
 import mc.oauth2.config.TEST_USERNAME
+import mc.oauth2.config.web.configurations.AuthorizationServerSecurityConfigurationUnitTest.AuthorizationServerSecurityTestConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Profile
+import org.springframework.http.HttpRequest
+import org.springframework.mock.web.MockHttpServletRequest
+import org.springframework.security.authentication.AuthenticationProvider
+import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint
@@ -17,8 +31,11 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
+import org.springframework.security.web.authentication.WebAuthenticationDetails
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.RequestPostProcessor
@@ -31,8 +48,10 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.Filter
 
+@ActiveProfiles(*[Profiles.TEST, Profiles.IN_MEM])
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest(classes = [AuthorizationServerSecurityConfiguration::class])
+@SpringBootTest(classes = [AuthorizationServerSecurityConfiguration::class,
+    AuthorizationServerSecurityTestConfiguration::class])
 internal class AuthorizationServerSecurityConfigurationUnitTest {
 
     @Autowired
@@ -148,5 +167,41 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
                 .andDo(print())
     }
 
+    @TestConfiguration
+    @Profile(Profiles.TEST)
+    internal class AuthorizationServerSecurityTestConfiguration {
+
+        @Bean
+        fun userAuthenticationProvider(): AuthenticationProvider {
+            val provider = mockk<AuthenticationProvider>()
+            stageAuthenticationProvider(provider)
+            return provider
+        }
+
+        private fun stageAuthenticationProvider(provider: AuthenticationProvider) {
+            stageAuthenticate(provider)
+            stageSupports(provider)
+        }
+
+        private fun stageAuthenticate(provider: AuthenticationProvider) {
+            every { provider.authenticate(any()) }
+                    .throws(AuthenticationServiceException(MSG_AUTHENTICATION_FAILURE))
+            every { provider.authenticate(getValidAuthentication()) }
+                    .returns(getValidAuthenticationToken())
+        }
+
+        private fun getValidAuthentication(): Authentication {
+            val token = UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD)
+            token.details = WebAuthenticationDetails(MockHttpServletRequest())
+            return token
+        }
+
+        private fun getValidAuthenticationToken(): Authentication =
+                UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD, TEST_ROLES)
+
+        private fun stageSupports(provider: AuthenticationProvider) {
+            every { provider.supports(any()) }.returns(true)
+        }
+    }
 
 }
