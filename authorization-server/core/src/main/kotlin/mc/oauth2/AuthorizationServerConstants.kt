@@ -2,27 +2,27 @@ package mc.oauth2
 
 import java.time.Duration
 
-const val URI_LOGIN: String = "/login"
+internal const val URI_LOGIN: String = "/login"
 
-const val URI_LOGIN_ALL: String = "$URI_LOGIN**"
+internal const val URI_LOGIN_ALL: String = "$URI_LOGIN**"
 
-const val URI_LOGIN_ERROR: String = "/login?error"
+internal const val URI_LOGIN_ERROR: String = "/login?error"
 
-const val ROLE_ADMIN: String = "ADMIN"
+internal const val ROLE_ADMIN: String = "ADMIN"
 
-const val ROLE_USER: String = "USER"
+internal const val ROLE_USER: String = "USER"
 
-const val MSG_AUTHENTICATION_FAILURE = "Authentication failed"
+internal const val MSG_AUTHENTICATION_FAILURE = "Authentication failed"
 
-val URIS_ALLOWED = arrayOf(URI_LOGIN_ALL, "/resources/**", "/signup", "/about")
+internal val URIS_ALLOWED = arrayOf(URI_LOGIN_ALL, "/resources/**", "/signup", "/about")
 
-val URIS_PROTECT = arrayOf("/authorize")
+internal val URIS_PROTECT = arrayOf("/authorize")
 
-val URIS_ADMIN_ONLY = arrayOf("/admin")
+internal val URIS_ADMIN_ONLY = arrayOf("/admin")
 
-val ROLES_ALL: Array<String>
+internal val ROLES_ALL: Array<String>
     get() = arrayOf(ROLE_USER, ROLE_ADMIN)
 
-val MAX_DURATION = Duration.ofDays(365).seconds
+internal val MAX_DURATION = Duration.ofDays(365).seconds
 
 
