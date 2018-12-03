@@ -45,7 +45,7 @@ class AuthorizationServerSecurityConfiguration(
         configureLoginForm(http)
         configureLogout(http)
         configureErrorHandling(http)
-        configureUseOfHeaders(http)
+        configureHeaders(http)
     }
 
     private fun configureUserAuthenticationProvider(auth: AuthenticationManagerBuilder) {
@@ -135,9 +135,10 @@ class AuthorizationServerSecurityConfiguration(
                 .authenticationEntryPoint(LoginUrlAuthenticationEntryPoint(URI_LOGIN))
     }
 
-    private fun configureUseOfHeaders(http: HttpSecurity) {
+    private fun configureHeaders(http: HttpSecurity) {
         http.headers()
-                .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN).and()
+                .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN)
+                .and()
                 .httpStrictTransportSecurity().maxAgeInSeconds(MAX_DURATION)
     }
 
