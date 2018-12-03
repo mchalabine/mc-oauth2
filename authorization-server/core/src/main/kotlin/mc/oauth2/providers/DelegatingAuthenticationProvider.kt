@@ -22,7 +22,7 @@ import kotlin.reflect.full.isSubclassOf
  *
  * @author Michael Chalabine
  */
-class DelegatingAuthenticationProvider(
+internal class DelegatingAuthenticationProvider(
         private val authenticationService: AuthenticationService) : AuthenticationProvider {
 
     @Throws(AuthenticationException::class)
