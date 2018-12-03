@@ -1,9 +1,6 @@
 package mc.oauth2.providers
 
-import mc.oauth2.Credentials
-import mc.oauth2.MSG_AUTHENTICATION_FAILURE
-import mc.oauth2.Principal
-import mc.oauth2.ROLE_USER
+import mc.oauth2.*
 import mc.oauth2.integration.AuthenticationResult
 import mc.oauth2.integration.AuthenticationResult.AUTHENTICATED
 import mc.oauth2.integration.AuthenticationService
@@ -55,7 +52,7 @@ internal class DelegatingAuthenticationProvider(
     }
 
     private fun getValidAuthenticationDesiredRoles(): Collection<GrantedAuthority> {
-        return arrayListOf(SimpleGrantedAuthority("ROLE_$ROLE_USER"))
+        return arrayListOf(SimpleGrantedAuthority("ROLE_${Roles.USER}"))
     }
 
     private fun validate(authenticationResult: AuthenticationResult) {

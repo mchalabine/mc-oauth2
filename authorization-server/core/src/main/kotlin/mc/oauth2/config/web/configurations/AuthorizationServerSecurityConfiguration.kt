@@ -144,7 +144,7 @@ class AuthorizationServerSecurityConfiguration(
 
     private fun configureUrisRestrictedToAdmin(http: HttpSecurity) {
         http.authorizeRequests()
-                .antMatchers(*URIS_ADMIN_ONLY).hasRole(ROLE_ADMIN)
+                .antMatchers(*URIS_ADMIN_ONLY).hasRole(Roles.ADMIN)
     }
 
     private fun configureUrisOpenForAll(http: HttpSecurity) {

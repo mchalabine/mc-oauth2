@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import mc.oauth2.MSG_AUTHENTICATION_FAILURE
 import mc.oauth2.Profiles
-import mc.oauth2.ROLE_USER
+import mc.oauth2.Roles
 import mc.oauth2.URI_LOGIN
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_ROLES
@@ -133,7 +133,7 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
     @Test
     fun `test authenticates with role user @LOGIN where user matches`() {
         val token = getValidAuthenticationToken()
-        login(token).andExpect(authenticated().withRoles(ROLE_USER))
+        login(token).andExpect(authenticated().withRoles(Roles.USER))
     }
 
     @Test
