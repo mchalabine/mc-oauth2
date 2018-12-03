@@ -171,20 +171,31 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
         @Bean
         fun userAuthenticationProvider(): AuthenticationProvider {
             val provider = mockk<AuthenticationProvider>()
-            stageAuthenticationProvider(provider)
+            return stageAuthenticationProvider(provider)
+        }
+
+        private fun stageAuthenticationProvider(
+                provider: AuthenticationProvider): AuthenticationProvider {
+            stageAuthenticate(provider)
+            stageSupports(provider)
             return provider
         }
 
-        private fun stageAuthenticationProvider(provider: AuthenticationProvider) {
-            stageAuthenticate(provider)
-            stageSupports(provider)
+        private fun stageAuthenticate(provider: AuthenticationProvider) {
+            stageAuthenticateFailure(provider)
+            stageAuthenticateSuccess(provider)
         }
 
-        private fun stageAuthenticate(provider: AuthenticationProvider) {
-            every { provider.authenticate(any()) }
-                    .throws(AuthenticationServiceException(MSG_AUTHENTICATION_FAILURE))
+        private fun stageAuthenticateSuccess(
+                provider: AuthenticationProvider) {
             every { provider.authenticate(getValidAuthentication()) }
                     .returns(getValidAuthenticationToken())
+        }
+
+        private fun stageAuthenticateFailure(
+                provider: AuthenticationProvider) {
+            every { provider.authenticate(any()) }
+                    .throws(AuthenticationServiceException(MSG_AUTHENTICATION_FAILURE))
         }
 
         private fun getValidAuthentication(): Authentication {
