@@ -186,14 +186,12 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
             stageAuthenticateSuccess(provider)
         }
 
-        private fun stageAuthenticateSuccess(
-                provider: AuthenticationProvider) {
+        private fun stageAuthenticateSuccess(provider: AuthenticationProvider) {
             every { provider.authenticate(getValidAuthentication()) }
                     .returns(getValidAuthenticationToken())
         }
 
-        private fun stageAuthenticateFailure(
-                provider: AuthenticationProvider) {
+        private fun stageAuthenticateFailure(provider: AuthenticationProvider) {
             every { provider.authenticate(any()) }
                     .throws(AuthenticationServiceException(MSG_AUTHENTICATION_FAILURE))
         }
