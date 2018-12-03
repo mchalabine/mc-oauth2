@@ -1,6 +1,5 @@
 package mc.oauth2.config.web.configurations
 
-import mc.oauth2.Profiles
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -9,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest(classes = [(AuthorizationServerPasswordEncodersConfiguration::class)])
 internal class AuthorizationServerPasswordEncodersConfigurationUnitTest {
