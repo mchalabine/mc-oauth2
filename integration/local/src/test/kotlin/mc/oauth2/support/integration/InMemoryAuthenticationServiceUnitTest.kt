@@ -7,7 +7,9 @@ import mc.oauth2.config.TEST_CREDENTIALS
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_PRINCIPAL
 import mc.oauth2.config.TEST_USERNAME
+import mc.oauth2.integration.AuthenticationResult
 import mc.oauth2.integration.AuthenticationResult.AUTHENTICATED
+import mc.oauth2.integration.AuthenticationResult.UNAUTHENTICATED
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -24,14 +26,25 @@ internal class InMemoryAuthenticationServiceUnitTest {
     @Test
     fun `test authenticates where both username and credentials match`() {
         val actual = authenticationService.authenticate(principal, credentials)
-        assertThat(actual).isSameAs(AUTHENTICATED)
+        assertAuthenticated(actual)
     }
 
     @Test
     fun `test fails to authenticates where username does not match`() {
+        val principal = getInvalidPrincipal()
         val actual = authenticationService.authenticate(principal, credentials)
+        assertUnauthenticated(actual)
+    }
+
+    private fun assertAuthenticated(actual: AuthenticationResult) {
         assertThat(actual).isSameAs(AUTHENTICATED)
     }
+
+    private fun assertUnauthenticated(actual: AuthenticationResult) {
+        assertThat(actual).isSameAs(UNAUTHENTICATED)
+    }
+
+    private fun getInvalidPrincipal() = Principal.valueOf("invalid")
 
     private fun getInMemoryService(): InMemoryAuthenticationService {
         return InMemoryAuthenticationService.aService()
