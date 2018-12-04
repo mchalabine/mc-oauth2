@@ -5,8 +5,8 @@ import mc.oauth2.User
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_USERNAME
 import mc.oauth2.integration.AuthenticationService
-import mc.oauth2.support.integration.InMemoryAuthenticationService
-import mc.oauth2.support.integration.InMemoryAuthenticationService.InMemoryAuthenticationServiceBuilderUser
+import mc.oauth2.integration.InMemoryAuthenticationService
+import mc.oauth2.integration.InMemoryAuthenticationService.InMemoryAuthenticationServiceBuilderUser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile

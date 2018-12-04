@@ -10,6 +10,7 @@ import mc.oauth2.config.TEST_USERNAME
 import mc.oauth2.integration.AuthenticationResult
 import mc.oauth2.integration.AuthenticationResult.AUTHENTICATED
 import mc.oauth2.integration.AuthenticationResult.UNAUTHENTICATED
+import mc.oauth2.integration.InMemoryAuthenticationService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
