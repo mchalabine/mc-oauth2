@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 /**
- * Delegates to AuthenticationService.
+ * Knows how to authenticate using AuthenticationService delegate.
  *
  * @author Michael Chalabine
  */
