@@ -1,4 +1,4 @@
-package mc.oauth2.config.web.configurations
+package mc.oauth2.configurations
 
 import mc.oauth2.*
 import org.springframework.boot.autoconfigure.security.SecurityProperties

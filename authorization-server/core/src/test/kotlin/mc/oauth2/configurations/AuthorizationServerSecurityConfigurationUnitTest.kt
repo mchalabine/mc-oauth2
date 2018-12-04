@@ -1,4 +1,4 @@
-package mc.oauth2.config.web.configurations
+package mc.oauth2.configurations
 
 import io.mockk.every
 import io.mockk.mockk
@@ -9,7 +9,7 @@ import mc.oauth2.URI_LOGIN
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_ROLES
 import mc.oauth2.config.TEST_USERNAME
-import mc.oauth2.config.web.configurations.AuthorizationServerSecurityConfigurationUnitTest.AuthorizationServerSecurityTestConfiguration
+import mc.oauth2.configurations.AuthorizationServerSecurityConfigurationUnitTest.AuthorizationServerSecurityTestConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
