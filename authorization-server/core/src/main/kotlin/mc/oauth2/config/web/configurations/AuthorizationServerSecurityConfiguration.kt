@@ -37,11 +37,10 @@ class AuthorizationServerSecurityConfiguration(
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        secureEndpointsUsingSpringSecurity(http)
+        secureAuthenticationSpecificEndpoints(http)
     }
 
-    private fun secureEndpointsUsingSpringSecurity(
-            http: HttpSecurity) {
+    private fun secureAuthenticationSpecificEndpoints(http: HttpSecurity) {
         init(http)
         configureCsrf(http)
         configureUrisOpenForAll(http)
