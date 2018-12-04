@@ -1,9 +1,7 @@
 package mc.oauth2.config.web.configurations
 
-import mc.oauth2.Profiles
+import mc.oauth2.EnableAuthorizationServerCustom
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import
-import org.springframework.context.annotation.Profile
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer
@@ -13,8 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
  * @author Michael Chalabine
  */
 @Configuration
-@Profile(Profiles.LIVE)
-@Import(AuthorizationServerSecurityConfiguration::class)
+@EnableAuthorizationServerCustom
 class AuthorizationServerConfiguration : AuthorizationServerConfigurerAdapter() {
 
     override fun configure(security: AuthorizationServerSecurityConfigurer) {
