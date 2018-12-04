@@ -3,11 +3,16 @@ package mc.oauth2
 import mc.oauth2.config.web.configurations.AuthorizationServerSecurityConfigurationCustom
 import org.springframework.context.annotation.Import
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerEndpointsConfiguration
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
 import java.lang.annotation.Documented
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
 /**
+ * Imports Custom Security Authorization Server Configuration compared to Spring's
+ * default [EnableAuthorizationServer].
+ *
+ * @see EnableAuthorizationServer
  * @author Michael Chalabine
  */
 @Target(AnnotationTarget.TYPE, AnnotationTarget.CLASS)
