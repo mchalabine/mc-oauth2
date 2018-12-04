@@ -1,6 +1,6 @@
 package mc.oauth2.config.web.configurations
 
-import mc.oauth2.EnableAuthorizationServerCustom
+import mc.oauth2.annotations.EnableAuthorizationServerCustom
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerSecurityConfiguration
