@@ -20,5 +20,5 @@ import java.lang.annotation.RetentionPolicy
 @Documented
 @Import(AuthorizationServerEndpointsConfiguration::class,
         AuthorizationServerSecurityConfigurationCustom::class)
-annotation class EnableAuthorizationServerCustom {
+annotation class EnableAuthorizationServerCustomized {
 }
