@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
-@SpringBootTest(classes = [(AuthorizationServerPasswordEncodersConfiguration::class)])
+@SpringBootTest(classes = [AuthorizationServerPasswordEncodersConfiguration::class])
 internal class AuthorizationServerPasswordEncodersConfigurationUnitTest {
 
     @Autowired

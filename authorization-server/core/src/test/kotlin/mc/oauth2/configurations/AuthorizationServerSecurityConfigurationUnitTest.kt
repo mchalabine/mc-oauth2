@@ -45,7 +45,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.Filter
 
-@ActiveProfiles(*[Profiles.TEST, Profiles.IN_MEM])
+@ActiveProfiles(Profiles.TEST, Profiles.IN_MEM)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerSecurityConfiguration::class,
     AuthorizationServerSecurityTestConfiguration::class])
