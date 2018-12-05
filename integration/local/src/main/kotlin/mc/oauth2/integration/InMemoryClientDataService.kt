@@ -8,7 +8,7 @@ import mc.oauth2.ClientId
  */
 class InMemoryClientDataService : ClientDataService {
 
-    override fun loadClientByClientId(id: ClientId): ClientData {
+    override fun loadClientByClientId(clientId: ClientId): ClientData {
         TODO("not implemented")
     }
 }

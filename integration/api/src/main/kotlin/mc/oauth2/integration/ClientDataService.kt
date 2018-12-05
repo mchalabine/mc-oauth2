@@ -8,5 +8,5 @@ import mc.oauth2.ClientId
  */
 interface ClientDataService {
 
-    fun loadClientByClientId(id: ClientId): ClientData
+    fun loadClientByClientId(clientId: ClientId): ClientData
 }
