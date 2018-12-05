@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  * @author Michael Chalabine
  */
 @Configuration
-class AuthorizationServerSecurityConfigurationCustom : AuthorizationServerSecurityConfiguration() {
+class AuthorizationServerSecurityConfigurationCustomized : AuthorizationServerSecurityConfiguration() {
 
     override fun configure(http: HttpSecurity) {
         super.configure(http)
