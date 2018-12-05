@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.provider.ClientDetailsService
 class ClientDetailsUserDetailsService constructor(
         private val clientDetailsService: ClientDetailsService) : UserDetailsService {
 
-    override fun loadUserByUsername(username: String?): UserDetails {
+    override fun loadUserByUsername(username: String): UserDetails {
         TODO("not implemented")
     }
 }
