@@ -1,4 +1,4 @@
-package mc.oauth2.client
+package mc.oauth2.integration
 
 import mc.oauth2.ClientData
 import mc.oauth2.ClientId

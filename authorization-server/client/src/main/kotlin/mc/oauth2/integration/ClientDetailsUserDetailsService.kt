@@ -1,4 +1,4 @@
-package mc.oauth2.client
+package mc.oauth2.integration
 
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
