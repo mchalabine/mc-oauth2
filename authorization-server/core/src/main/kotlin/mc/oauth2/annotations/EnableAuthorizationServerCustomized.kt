@@ -9,8 +9,8 @@ import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
 /**
- * Imports Custom Security Authorization Server Configuration compared to Spring's
- * default [EnableAuthorizationServer].
+ * Imports Custom Security Authorization Server Configuration instead of the default
+ * Authorization Server Configuration imported by Spring's [EnableAuthorizationServer].
  *
  * @see EnableAuthorizationServer
  * @author Michael Chalabine
@@ -20,5 +20,4 @@ import java.lang.annotation.RetentionPolicy
 @Documented
 @Import(AuthorizationServerEndpointsConfiguration::class,
         AuthorizationServerSecurityConfigurationCustomized::class)
-annotation class EnableAuthorizationServerCustomized {
-}
+annotation class EnableAuthorizationServerCustomized

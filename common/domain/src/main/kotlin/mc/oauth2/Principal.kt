@@ -20,7 +20,7 @@ data class Principal private constructor(private val principal: String) {
     private class PrincipalBuilder : PrincipalBuilderPrincipal,
         PrincipalBuilderBuild {
 
-        lateinit var principal: String
+        internal lateinit var principal: String
 
         override fun withPrincipal(value: String): PrincipalBuilderBuild {
             this.principal = value

@@ -1,6 +1,7 @@
 package mc.oauth2.configurations
 
 import mc.oauth2.Profiles
+import mc.oauth2.config.TEST_CLIENT
 import mc.oauth2.integration.ClientDataService
 import mc.oauth2.integration.InMemoryClientDataService
 import org.springframework.context.annotation.Bean
@@ -16,7 +17,8 @@ class ClientDataServiceConfiguration {
 
     @Bean
     fun clientDataService(): ClientDataService {
-        return InMemoryClientDataService()
+        return InMemoryClientDataService.aService()
+                .withClientData(TEST_CLIENT).build()
     }
 
 }
