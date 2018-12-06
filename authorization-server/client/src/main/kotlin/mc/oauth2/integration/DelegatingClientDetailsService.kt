@@ -4,6 +4,7 @@ import mc.oauth2.ClientData
 import mc.oauth2.ClientId
 import org.springframework.security.oauth2.provider.ClientDetails
 import org.springframework.security.oauth2.provider.ClientDetailsService
+import org.springframework.security.oauth2.provider.client.BaseClientDetails
 
 /**
  * @author Michael Chalabine
@@ -24,6 +25,14 @@ class DelegatingClientDetailsService(
     private fun getClientId(id: String) = ClientId.valueOf(id)
 
     private fun getClientDetails(clientData: ClientData): ClientDetails {
-        TODO("Not yet implemented")
+        val clientDetails = BaseClientDetails()
+        setClientId(clientData, clientDetails)
+        return clientDetails
+    }
+
+    private fun setClientId(
+            clientData: ClientData,
+            clientDetails: BaseClientDetails) {
+        clientDetails.clientId = clientData.clientId.toString()
     }
 }
