@@ -30,9 +30,7 @@ class DelegatingClientDetailsService(
         return clientDetails
     }
 
-    private fun setClientId(
-            clientData: ClientData,
-            clientDetails: BaseClientDetails) {
+    private fun setClientId(clientData: ClientData, clientDetails: BaseClientDetails) {
         clientDetails.clientId = clientData.clientId.toString()
     }
 }
