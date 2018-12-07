@@ -2,19 +2,23 @@ package mc.oauth2.configurations
 
 import mc.oauth2.annotations.EnableAuthorizationServerCustomized
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerSecurityConfiguration
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
 
 /**
- * Meant to override default Spring Authorization Server Security set by the
- * [EnableAuthorizationServer] configuration annotation.
+ * Customizes Spring's default Authorization Server Security Configuration in a way not achievable
+ * through any other means, e.g. through the standard customization way of extending the
+ * [AuthorizationServerConfigurerAdapter].
  *
  * @see EnableAuthorizationServer
  * @see EnableAuthorizationServerCustomized
+ * @see AuthorizationServerConfigurerAdapter
  *
  * @author Michael Chalabine
  */
 @Configuration
-class AuthorizationServerSecurityConfigurationCustomized : AuthorizationServerSecurityConfiguration() {
+class AuthorizationServerSecurityConfigurationCustomized :
+    AuthorizationServerSecurityConfiguration() {
 
 }
