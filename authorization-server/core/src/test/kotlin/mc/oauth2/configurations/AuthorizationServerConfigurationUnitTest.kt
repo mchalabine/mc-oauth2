@@ -9,8 +9,11 @@ import mc.oauth2.config.TEST_ROLES
 import mc.oauth2.config.TEST_USERNAME
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
 import org.springframework.mock.web.MockHttpServletRequest
@@ -21,22 +24,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.web.context.WebApplicationContext
 
 @ActiveProfiles(Profiles.TEST, Profiles.IN_MEM)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerConfiguration::class,
     AuthorizationServerTestConfiguration::class])
-internal class AuthorizationServerConfigurationUnitTest {
+internal class AuthorizationServerConfigurationUnitTest @Autowired private constructor(
+        private val applicationContext: ApplicationContext) {
 
     @Test
     fun testInstantiate() {
-        println()
+        println(applicationContext)
     }
 }
 
 @TestConfiguration
 @Profile(Profiles.TEST)
-@EnableWebSecurity
+@EnableAutoConfiguration
 class AuthorizationServerTestConfiguration {
 
     @Bean

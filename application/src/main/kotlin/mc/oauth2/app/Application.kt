@@ -6,7 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication
-@Import(ApplicationConfiguration::class)
+@Import(*[ApplicationConfiguration::class])
 class Application {
 
     fun main(args: Array<String>) {

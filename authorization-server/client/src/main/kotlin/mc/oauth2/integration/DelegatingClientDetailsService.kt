@@ -4,13 +4,35 @@ import mc.oauth2.ClientData
 import mc.oauth2.ClientId
 import org.springframework.security.oauth2.provider.ClientDetails
 import org.springframework.security.oauth2.provider.ClientDetailsService
+import org.springframework.security.oauth2.provider.ClientRegistrationService
 import org.springframework.security.oauth2.provider.client.BaseClientDetails
 
 /**
  * @author Michael Chalabine
  */
 class DelegatingClientDetailsService(
-        private val clientDataService: ClientDataService) : ClientDetailsService {
+        private val clientDataService: ClientDataService) : ClientDetailsService,
+    ClientRegistrationService {
+
+    override fun updateClientSecret(clientId: String?, secret: String?) {
+        TODO("not implemented")
+    }
+
+    override fun removeClientDetails(clientId: String?) {
+        TODO("not implemented")
+    }
+
+    override fun addClientDetails(clientDetails: ClientDetails?) {
+        TODO("not implemented")
+    }
+
+    override fun updateClientDetails(clientDetails: ClientDetails?) {
+        TODO("not implemented")
+    }
+
+    override fun listClientDetails(): MutableList<ClientDetails> {
+        TODO("not implemented")
+    }
 
     override fun loadClientByClientId(clientId: String): ClientDetails {
         val clientData = loadClientDataByClientId(clientId)
