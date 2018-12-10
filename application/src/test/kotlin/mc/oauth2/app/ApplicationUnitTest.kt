@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
-@ExtendWith(SpringExtension::class)
 @ActiveProfiles(Profiles.TEST, Profiles.IN_MEM)
 @SpringBootTest(classes = [Application::class, ApplicationTestConfiguration::class])
 class ApplicationUnitTest {

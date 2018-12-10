@@ -22,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.core.Authentication
+import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.web.context.WebApplicationContext
@@ -41,7 +42,7 @@ internal class AuthorizationServerConfigurationUnitTest @Autowired private const
 
 @TestConfiguration
 @Profile(Profiles.TEST)
-@EnableAutoConfiguration
+@EnableWebSecurity
 class AuthorizationServerTestConfiguration {
 
     @Bean

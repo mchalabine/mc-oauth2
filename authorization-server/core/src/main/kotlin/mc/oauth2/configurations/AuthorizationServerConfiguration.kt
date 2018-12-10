@@ -1,7 +1,10 @@
 package mc.oauth2.configurations
 
 import mc.oauth2.annotations.EnableAuthorizationServerCustomized
+import mc.oauth2.integration.ClientDataService
+import mc.oauth2.integration.DelegatingClientDetailsService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -17,20 +20,18 @@ import org.springframework.security.oauth2.provider.ClientDetailsService
 @Configuration
 @EnableAuthorizationServerCustomized
 @Import(*[AuthorizationServerPasswordEncodersConfiguration::class,
-    DelegatingClientDetailsServiceConfiguration::class])
+    ClientDataServiceConfiguration::class])
 class AuthorizationServerConfiguration(
-        private val passwordEncoder: PasswordEncoder) :
+        @Autowired private val passwordEncoder: PasswordEncoder,
+        @Autowired private val clientDataService: ClientDataService) :
     AuthorizationServerConfigurerAdapter() {
-
-    @Autowired
-    private lateinit var clientDetailsService: ClientDetailsService
 
     override fun configure(security: AuthorizationServerSecurityConfigurer) {
         security.passwordEncoder(passwordEncoder)
     }
 
     override fun configure(clients: ClientDetailsServiceConfigurer) {
-        clients.withClientDetails(clientDetailsService)
+        clients.withClientDetails(DelegatingClientDetailsService(clientDataService))
         super.configure(clients)
     }
 

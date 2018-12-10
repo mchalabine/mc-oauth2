@@ -1,8 +1,8 @@
 package mc.oauth2.app
 
-import mc.oauth2.configurations.AuthorizationServerConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
+import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Import
 class Application {
 
     fun main(args: Array<String>) {
-        SpringApplicationBuilder(Application::class.java).run(*args)
+        runApplication<Application>(*args)
     }
 }
 
