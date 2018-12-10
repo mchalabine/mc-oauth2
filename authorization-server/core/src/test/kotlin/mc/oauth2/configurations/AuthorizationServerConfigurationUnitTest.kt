@@ -7,10 +7,10 @@ import mc.oauth2.Profiles
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_ROLES
 import mc.oauth2.config.TEST_USERNAME
+import mc.oauth2.integration.DelegatingClientDetailsService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.ApplicationContext
@@ -22,10 +22,8 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.core.Authentication
-import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.web.context.WebApplicationContext
 
 @ActiveProfiles(Profiles.TEST, Profiles.IN_MEM)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -49,6 +47,11 @@ class AuthorizationServerTestConfiguration {
     fun userAuthenticationProvider(): AuthenticationProvider {
         val provider = mockk<AuthenticationProvider>()
         return stageAuthenticationProvider(provider)
+    }
+
+    @Bean
+    fun delegatingClientDetailsService(): DelegatingClientDetailsService {
+        return mockk()
     }
 
     private fun stageAuthenticationProvider(

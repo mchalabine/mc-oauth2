@@ -2,6 +2,7 @@ package mc.oauth2.app
 
 import io.mockk.mockk
 import mc.oauth2.Profiles
+import mc.oauth2.integration.DelegatingClientDetailsService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -28,6 +29,11 @@ internal class ApplicationTestConfiguration {
 
     @Bean
     fun userAuthenticationProvider(): AuthenticationProvider {
+        return mockk()
+    }
+
+    @Bean
+    fun delegatingClientDetailsService() : DelegatingClientDetailsService {
         return mockk()
     }
 

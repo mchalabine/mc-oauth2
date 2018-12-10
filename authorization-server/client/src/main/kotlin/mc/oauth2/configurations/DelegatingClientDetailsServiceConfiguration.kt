@@ -16,11 +16,11 @@ import org.springframework.security.oauth2.provider.ClientDetailsService
 @Configuration
 @Profile(Profiles.LIVE)
 @Import(*[ClientDataServiceConfiguration::class])
-class DelegatingClientDetailsServiceConfiguration @Autowired constructor(
-        private val clientDataService: ClientDataService) {
+class DelegatingClientDetailsServiceConfiguration(
+        @Autowired private val clientDataService: ClientDataService) {
 
     @Bean
-    fun clientDetailsService(): ClientDetailsService {
+    fun delegatingClientDetailsService(): DelegatingClientDetailsService {
         return DelegatingClientDetailsService(clientDataService)
     }
 
