@@ -7,7 +7,6 @@ import mc.oauth2.Profiles
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_ROLES
 import mc.oauth2.config.TEST_USERNAME
-import mc.oauth2.integration.DelegatingClientDetailsService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,6 +21,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.core.Authentication
+import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.test.context.ActiveProfiles
 
@@ -50,7 +50,7 @@ class AuthorizationServerTestConfiguration {
     }
 
     @Bean
-    fun delegatingClientDetailsService(): DelegatingClientDetailsService {
+    fun delegatingClientDetailsService(): ClientDetailsService {
         return mockk()
     }
 

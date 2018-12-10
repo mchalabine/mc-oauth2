@@ -20,7 +20,7 @@ class DelegatingClientDetailsServiceConfiguration(
         @Autowired private val clientDataService: ClientDataService) {
 
     @Bean
-    fun delegatingClientDetailsService(): DelegatingClientDetailsService {
+    fun delegatingClientDetailsService(): ClientDetailsService {
         return DelegatingClientDetailsService(clientDataService)
     }
 
