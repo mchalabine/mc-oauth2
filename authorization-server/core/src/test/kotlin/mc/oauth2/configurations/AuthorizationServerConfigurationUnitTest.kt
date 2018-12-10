@@ -29,7 +29,7 @@ import org.springframework.test.context.ActiveProfiles
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerConfiguration::class,
     AuthorizationServerTestConfiguration::class])
-internal class AuthorizationServerConfigurationUnitTest @Autowired private constructor(
+internal class AuthorizationServerConfigurationUnitTest(
         private val applicationContext: ApplicationContext) {
 
     @Test
