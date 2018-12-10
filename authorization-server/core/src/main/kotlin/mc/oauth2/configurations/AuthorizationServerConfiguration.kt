@@ -2,6 +2,8 @@ package mc.oauth2.configurations
 
 import mc.oauth2.annotations.EnableAuthorizationServerCustomized
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer
@@ -12,10 +14,12 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
  */
 @Configuration
 @EnableAuthorizationServerCustomized
-class AuthorizationServerConfiguration : AuthorizationServerConfigurerAdapter() {
+@Import(AuthorizationServerPasswordEncodersConfiguration::class)
+class AuthorizationServerConfiguration(
+        private val passwordEncoder: PasswordEncoder) : AuthorizationServerConfigurerAdapter() {
 
     override fun configure(security: AuthorizationServerSecurityConfigurer) {
-        super.configure(security)
+        security.passwordEncoder(passwordEncoder)
     }
 
     override fun configure(clients: ClientDetailsServiceConfigurer) {

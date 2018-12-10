@@ -112,7 +112,7 @@ class AuthorizationServerSecurityConfiguration(
 
     private fun toMvcMetaData(modelAndView: ModelAndView): MethodInvocationInfo {
         require(modelAndView is MethodInvocationInfo)
-        return modelAndView as MethodInvocationInfo
+        return modelAndView
     }
 
     private fun getOAuth2AuthorizationEndpointMock() =

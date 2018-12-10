@@ -1,6 +1,6 @@
 dependencies {
 
-    compile("org.springframework.security:spring-security-test:5.1.1.RELEASE")
+    compile("org.springframework.security:spring-security-test:$springSecurityTestVersion")
 
     compile("org.springframework.boot:spring-boot-starter-test:$springBootVersion") {
         exclude group: "junit", module: "junit"

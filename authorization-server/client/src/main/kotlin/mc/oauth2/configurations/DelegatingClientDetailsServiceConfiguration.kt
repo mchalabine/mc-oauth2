@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.provider.ClientDetailsService
  * @author Michael Chalabine
  */
 @Configuration
-@Profile(Profiles.LIVE)
 @Import(ClientDataServiceConfiguration::class)
 class DelegatingClientDetailsServiceConfiguration(
         private val clientDataService: ClientDataService) {

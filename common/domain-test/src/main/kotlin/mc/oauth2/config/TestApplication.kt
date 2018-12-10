@@ -12,8 +12,10 @@ import org.springframework.context.annotation.FilterType
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.TYPE, AnnotationTarget.CLASS)
 @SpringBootConfiguration
-@ComponentScan(excludeFilters = [ComponentScan.Filter(type = FilterType.CUSTOM,
-        classes = arrayOf(TypeExcludeFilter::class)), ComponentScan.Filter(type = FilterType.CUSTOM,
-        classes = arrayOf(AutoConfigurationExcludeFilter::class))])
+@ComponentScan(excludeFilters = [
+    ComponentScan.Filter(type = FilterType.CUSTOM,
+            classes = arrayOf(TypeExcludeFilter::class)),
+    ComponentScan.Filter(type = FilterType.CUSTOM,
+            classes = arrayOf(AutoConfigurationExcludeFilter::class))])
 annotation class TestApplication
 
