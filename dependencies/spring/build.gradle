@@ -1,4 +1,3 @@
-
 dependencies {
 
     compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
@@ -14,7 +13,7 @@ dependencies {
         exclude group: "org.springframework.security.oauth", module: "spring-security-oauth2"
     }
 
-    compile "org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE"
+    compile "org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE"
 
 }
 

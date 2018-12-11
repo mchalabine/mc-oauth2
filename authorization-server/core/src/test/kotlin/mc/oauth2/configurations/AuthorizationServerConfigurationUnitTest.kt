@@ -9,10 +9,11 @@ import mc.oauth2.config.TEST_ROLES
 import mc.oauth2.config.TEST_USERNAME
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
-import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
 import org.springframework.mock.web.MockHttpServletRequest
@@ -24,13 +25,16 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.web.context.WebApplicationContext
 
 @ActiveProfiles(Profiles.TEST, Profiles.IN_MEM)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerConfiguration::class,
     AuthorizationServerTestConfiguration::class])
+@ExtendWith(SpringExtension::class)
 internal class AuthorizationServerConfigurationUnitTest(
-        private val applicationContext: ApplicationContext) {
+        @Autowired private val applicationContext: WebApplicationContext) {
 
     @Test
     fun testInstantiate() {
@@ -50,7 +54,7 @@ class AuthorizationServerTestConfiguration {
     }
 
     @Bean
-    fun delegatingClientDetailsService(): ClientDetailsService {
+    fun clientDetailsService(): ClientDetailsService {
         return mockk()
     }
 

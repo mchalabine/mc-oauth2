@@ -13,6 +13,7 @@ import mc.oauth2.configurations.AuthorizationServerSecurityConfigurationUnitTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
@@ -31,6 +32,8 @@ import org.springframework.security.test.web.servlet.response.SecurityMockMvcRes
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -49,6 +52,7 @@ import javax.servlet.Filter
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerSecurityConfiguration::class,
     AuthorizationServerSecurityTestConfiguration::class])
+@ExtendWith(SpringExtension::class)
 internal class AuthorizationServerSecurityConfigurationUnitTest {
 
     @Autowired

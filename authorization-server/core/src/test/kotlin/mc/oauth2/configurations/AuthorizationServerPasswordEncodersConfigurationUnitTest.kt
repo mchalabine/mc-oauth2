@@ -3,13 +3,16 @@ package mc.oauth2.configurations
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @SpringBootTest(classes = [AuthorizationServerPasswordEncodersConfiguration::class])
+@ExtendWith(SpringExtension::class)
 internal class AuthorizationServerPasswordEncodersConfigurationUnitTest {
 
     @Autowired
