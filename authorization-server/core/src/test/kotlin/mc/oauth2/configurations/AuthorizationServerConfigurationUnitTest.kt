@@ -35,6 +35,7 @@ internal class AuthorizationServerConfigurationUnitTest(
         private val applicationContext: WebApplicationContext) {
 
     val passwordEncoder: PasswordEncoder = getPasswordEncoderBean()
+
     val clientDetailsService: ClientDetailsService = getClientDetailsServiceBean()
 
     @Test
