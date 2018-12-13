@@ -3,29 +3,27 @@ package mc.oauth2.configurations
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.test.context.junit.jupiter.SpringExtension
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerPasswordEncodersConfiguration::class])
-internal class AuthorizationServerPasswordEncodersConfigurationUnitTest {
-
-    @Autowired
-    lateinit var context: ApplicationContext
+internal class AuthorizationServerPasswordEncodersConfigurationUnitTest(
+        val applicationContext: ApplicationContext) {
 
     @Test
     fun `test can retrieve password encoder bean`() {
-        val passwordEncoder = context.getBean(PasswordEncoder::class.java)
+        val passwordEncoder = applicationContext.getBean(PasswordEncoder::class.java)
         assertNotNull(passwordEncoder)
     }
 
     @Test
     fun `test password encoder is of expected type`() {
-        val passwordEncoder = context.getBean(PasswordEncoder::class.java)
+        val passwordEncoder = applicationContext.getBean(PasswordEncoder::class.java)
         assertTrue(BCryptPasswordEncoder::class.isInstance(passwordEncoder))
     }
 }
