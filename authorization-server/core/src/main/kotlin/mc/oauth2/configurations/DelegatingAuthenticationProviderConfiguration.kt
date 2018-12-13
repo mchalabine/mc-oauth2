@@ -16,7 +16,6 @@ class DelegatingAuthenticationProviderConfiguration(
         private val authenticationService: AuthenticationService) {
 
     @Bean
-    @Primary
     fun userAuthenticationProvider(): AuthenticationProvider {
         return DelegatingAuthenticationProvider(authenticationService)
     }

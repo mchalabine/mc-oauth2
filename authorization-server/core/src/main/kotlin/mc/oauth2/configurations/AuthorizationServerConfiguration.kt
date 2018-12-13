@@ -36,5 +36,4 @@ class AuthorizationServerConfiguration(
         super.configure(endpoints)
     }
 
-
 }

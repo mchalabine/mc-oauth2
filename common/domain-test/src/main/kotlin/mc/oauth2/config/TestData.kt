@@ -7,11 +7,12 @@ import mc.oauth2.Principal
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 
-
 const val TEST_USERNAME = "my-principal"
 const val TEST_PASSWORD = "my-secret"
+const val TEST_PASSWORD_ENCRYPTED =
+        "\$2a\$04\$g6BEIUWgCHhz6dW8Eqa9j.scFcr/DRcYF8YjqFX9lvCFfHxoH3Mjy"
 
-const val TEST_IP= "127.0.0.1"
+const val TEST_IP = "127.0.0.1"
 
 val TEST_PRINCIPAL = Principal.valueOf(TEST_USERNAME)
 val TEST_CREDENTIALS = Credentials.valueOf(TEST_PASSWORD)
