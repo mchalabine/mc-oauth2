@@ -32,8 +32,4 @@ class AuthorizationServerConfiguration(
         super.configure(clients)
     }
 
-    override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
-        super.configure(endpoints)
-    }
-
 }

@@ -20,7 +20,7 @@ data class ClientId private constructor(private val clientId: String) {
         lateinit var clientId: String
 
         override fun withId(id: String): ClientIdBuilderBuild {
-            this.clientId = id;
+            this.clientId = id
             return self()
         }
 
