@@ -39,8 +39,8 @@ internal class AuthorizationServerConfigurationUnitTest(
     }
 
     @Test
-    fun testInstantiate() {
-        println(applicationContext)
+    fun `assert can load context`() {
+        assertThat(applicationContext).isNotNull
     }
 
     private fun getIsBeanOverrideAllowed(): Boolean {
