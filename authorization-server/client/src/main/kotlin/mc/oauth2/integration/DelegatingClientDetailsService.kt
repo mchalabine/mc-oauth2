@@ -6,12 +6,10 @@ import org.springframework.security.oauth2.provider.ClientDetails
 import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.security.oauth2.provider.ClientRegistrationService
 import org.springframework.security.oauth2.provider.client.BaseClientDetails
-import org.springframework.stereotype.Service
 
 /**
  * @author Michael Chalabine
  */
-@Service
 class DelegatingClientDetailsService(
         private val clientDataService: ClientDataService) : ClientDetailsService,
     ClientRegistrationService {

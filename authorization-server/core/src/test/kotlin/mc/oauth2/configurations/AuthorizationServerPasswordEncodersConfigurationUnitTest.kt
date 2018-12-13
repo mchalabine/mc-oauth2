@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @SpringBootTest(classes = [AuthorizationServerPasswordEncodersConfiguration::class])
-@ExtendWith(SpringExtension::class)
 internal class AuthorizationServerPasswordEncodersConfigurationUnitTest {
 
     @Autowired

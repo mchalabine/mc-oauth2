@@ -7,15 +7,14 @@ import mc.oauth2.Profiles
 import mc.oauth2.config.TEST_PASSWORD
 import mc.oauth2.config.TEST_ROLES
 import mc.oauth2.config.TEST_USERNAME
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
+import org.springframework.context.support.GenericApplicationContext
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.AuthenticationServiceException
@@ -25,20 +24,28 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.web.context.WebApplicationContext
 
 @ActiveProfiles(Profiles.TEST, Profiles.IN_MEM)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerConfiguration::class,
     AuthorizationServerTestConfiguration::class])
-@ExtendWith(SpringExtension::class)
 internal class AuthorizationServerConfigurationUnitTest(
-        @Autowired private val applicationContext: WebApplicationContext) {
+        private val applicationContext: GenericApplicationContext) {
+
+    @Test
+    fun `assert context forbids bean override`() {
+        val actual = getIsBeanOverrideAllowed()
+        assertThat(actual).isFalse()
+    }
 
     @Test
     fun testInstantiate() {
         println(applicationContext)
+    }
+
+    private fun getIsBeanOverrideAllowed(): Boolean {
+        val beanFactory = applicationContext.defaultListableBeanFactory
+        return beanFactory.isAllowBeanDefinitionOverriding
     }
 }
 
@@ -54,7 +61,7 @@ class AuthorizationServerTestConfiguration {
     }
 
     @Bean
-    fun clientDetailsService(): ClientDetailsService {
+    fun delegatingClientDetailsService(): ClientDetailsService {
         return mockk()
     }
 

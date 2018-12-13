@@ -33,7 +33,7 @@ internal class ApplicationTestConfiguration {
     }
 
     @Bean
-    fun delegatingClientDetailsService() : ClientDetailsService {
+    fun clientDetailsService() : ClientDetailsService {
         return mockk()
     }
 

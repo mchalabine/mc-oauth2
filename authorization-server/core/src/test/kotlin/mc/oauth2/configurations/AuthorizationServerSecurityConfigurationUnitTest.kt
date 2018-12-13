@@ -52,7 +52,6 @@ import javax.servlet.Filter
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerSecurityConfiguration::class,
     AuthorizationServerSecurityTestConfiguration::class])
-@ExtendWith(SpringExtension::class)
 internal class AuthorizationServerSecurityConfigurationUnitTest {
 
     @Autowired
