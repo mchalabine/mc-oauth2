@@ -97,12 +97,12 @@ internal class AuthorizationServerSecurityConfigurationUnitTest {
     }
 
     @Test
-    fun `test CSRF rejects request @LOGIN where CSRF token missing`() {
+    fun `test CSRF rejects request @POST @LOGIN where CSRF token missing`() {
         mockMvc.perform(post(URI_LOGIN)).andExpect(status().isForbidden)
     }
 
     @Test
-    fun `test CSRF allows request @LOGIN where CSRF token present`() {
+    fun `test CSRF allows request @POST @LOGIN where CSRF token present`() {
         mockMvc.perform(post(URI_LOGIN).with(csrf())).andExpect(status().is3xxRedirection)
     }
 
