@@ -2,6 +2,7 @@ package mc.oauth2.configurations
 
 import mc.oauth2.Profiles
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
@@ -20,12 +21,12 @@ internal class AuthorizationServerTokenStoreConfigurationUnitTest constructor(
 
     @Test
     fun `test can retrieve tokenStore bean`() {
-        Assertions.assertThat(tokenStore).isNotNull
+        assertThat(tokenStore).isNotNull
     }
 
     @Test
     fun `test tokenStore bean has expected type`() {
-        Assertions.assertThat(tokenStore).isInstanceOf(InMemoryTokenStore::class.java)
+        assertThat(tokenStore).isInstanceOf(InMemoryTokenStore::class.java)
     }
 
 
