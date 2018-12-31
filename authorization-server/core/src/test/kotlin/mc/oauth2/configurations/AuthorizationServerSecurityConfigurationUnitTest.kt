@@ -52,14 +52,9 @@ import javax.servlet.Filter
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = [AuthorizationServerSecurityConfiguration::class,
     AuthorizationServerSecurityTestConfiguration::class])
-internal class AuthorizationServerSecurityConfigurationUnitTest {
-
-    @Autowired
-    lateinit var springSecurityFilterChain: Filter
-
-    @Autowired
-    lateinit var webApplicationContext: WebApplicationContext
-
+internal class AuthorizationServerSecurityConfigurationUnitTest @Autowired constructor(
+        val springSecurityFilterChain: Filter,
+        val webApplicationContext: WebApplicationContext){
 
     lateinit var mockMvc: MockMvc
 
