@@ -7,6 +7,7 @@ import mc.oauth2.Principal
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 
+
 const val TEST_USERNAME = "my-principal"
 const val TEST_PASSWORD = "my-secret"
 const val TEST_PASSWORD_ENCRYPTED =
@@ -19,9 +20,9 @@ val TEST_CREDENTIALS = Credentials.valueOf(TEST_PASSWORD)
 val TEST_ROLES = getValidAuthenticationDesiredRoles()
 
 const val TEST_CLIENT_NAME = "test-client"
+
 val TEST_CLIENT_ID = ClientId.valueOf(TEST_CLIENT_NAME)
 val TEST_CLIENT = ClientData.aClientData().withClientId(TEST_CLIENT_ID).build()
-
 
 private fun getValidAuthenticationDesiredRoles(): Collection<GrantedAuthority> {
     return arrayListOf(SimpleGrantedAuthority("ROLE_USER"))

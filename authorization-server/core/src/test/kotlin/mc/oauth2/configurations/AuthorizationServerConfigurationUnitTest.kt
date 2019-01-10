@@ -2,7 +2,6 @@ package mc.oauth2.configurations
 
 import io.mockk.every
 import io.mockk.mockk
-import mc.oauth2.MSG_AUTHENTICATION_FAILURE
 import mc.oauth2.Profiles
 import mc.oauth2.config.*
 import org.assertj.core.api.Assertions.assertThat
@@ -13,19 +12,20 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
 import org.springframework.context.support.GenericApplicationContext
-import org.springframework.mock.web.MockHttpServletRequest
-import org.springframework.security.authentication.AuthenticationProvider
-import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.provider.ClientDetails
 import org.springframework.security.oauth2.provider.ClientDetailsService
+import org.springframework.security.oauth2.provider.OAuth2Authentication
+import org.springframework.security.oauth2.provider.OAuth2Request
 import org.springframework.security.oauth2.provider.client.BaseClientDetails
-import org.springframework.security.web.authentication.WebAuthenticationDetails
+import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices
+
 
 @ActiveProfiles(Profiles.TEST, Profiles.IN_MEM)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -37,6 +37,10 @@ internal class AuthorizationServerConfigurationUnitTest(
     val passwordEncoder: PasswordEncoder = getPasswordEncoderBean()
 
     val clientDetailsService: ClientDetailsService = getClientDetailsServiceBean()
+
+    val tokenStore: TokenStore = getTokenStoreBean()
+
+    val tokenservice: AuthorizationServerTokenServices = getAuthorizationServerTokenServices()
 
     @Test
     fun `assert context forbids bean override`() {
@@ -50,15 +54,46 @@ internal class AuthorizationServerConfigurationUnitTest(
     }
 
     @Test
-    fun `test properly sets password encoder`() {
+    fun `test is set PasswordEncoder`() {
         val isSet = decideIsPasswordEncoderSet()
         assertThat(isSet).isTrue()
     }
 
     @Test
-    fun `test properly sets client details service`() {
-        val actual = clientDetailsService.loadClientByClientId(TEST_CLIENT_NAME)
-        assertThat(actual.clientId).isEqualTo(TEST_CLIENT_NAME)
+    fun `test is set ClientDetailsService`() {
+        val details = clientDetailsService.loadClientByClientId(TEST_CLIENT_NAME)
+        assertThat(details.clientId).isEqualTo(TEST_CLIENT_NAME)
+    }
+
+    @Test
+    fun `test is set TokenStore`() {
+        val authentication= getValidOAuth2AuthenticationToken()
+        val expected = tokenservice.createAccessToken(authentication)
+        val actual = tokenStore.getAccessToken(authentication)
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    private fun getValidOAuth2AuthenticationToken(): OAuth2Authentication {
+        val clientDetails = getTestClientDetails()
+        val request = getRequest(clientDetails)
+        val token = getAuthenticationToken(clientDetails)
+        return OAuth2Authentication(request, token)
+    }
+
+    private fun getTestClientDetails(): ClientDetails {
+        return clientDetailsService.loadClientByClientId(TEST_CLIENT_NAME)
+    }
+
+    private fun getAuthenticationToken(
+            clientDetails: ClientDetails): Authentication {
+        return UsernamePasswordAuthenticationToken(TEST_PRINCIPAL,
+                null, clientDetails.authorities)
+    }
+
+    private fun getRequest(clientDetails: ClientDetails): OAuth2Request {
+        return OAuth2Request(emptyMap(), TEST_CLIENT_NAME, TEST_ROLES,
+                true, clientDetails.scope, clientDetails.resourceIds,
+                null, emptySet(), emptyMap())
     }
 
     private fun getIsBeanOverrideAllowed(): Boolean {
@@ -81,6 +116,15 @@ internal class AuthorizationServerConfigurationUnitTest(
 
     private fun getBeanFactory() =
             (applicationContext as GenericApplicationContext).defaultListableBeanFactory
+
+    private fun getAuthorizationServerTokenServices(): AuthorizationServerTokenServices {
+        return applicationContext.getBean("defaultAuthorizationServerTokenServices",
+                AuthorizationServerTokenServices::class.java)
+    }
+
+    private fun getTokenStoreBean(): TokenStore {
+        return applicationContext.getBean("tokenStore", TokenStore::class.java)
+    }
 }
 
 @TestConfiguration
@@ -89,43 +133,9 @@ internal class AuthorizationServerConfigurationUnitTest(
 class AuthorizationServerTestConfiguration {
 
     @Bean
-    fun userAuthenticationProvider(): AuthenticationProvider {
-        val provider = mockk<AuthenticationProvider>()
-        return stageAuthenticationProvider(provider)
-    }
-
-    @Bean
     fun delegatingClientDetailsService(): ClientDetailsService {
         val service = mockk<ClientDetailsService>()
         return stageClientDetailsService(service)
-    }
-
-    private fun stageAuthenticationProvider(
-            provider: AuthenticationProvider): AuthenticationProvider {
-        stageAuthenticate(provider)
-        stageSupports(provider)
-        return provider
-    }
-
-    private fun stageAuthenticate(provider: AuthenticationProvider) {
-        stageAuthenticateFailure(provider)
-        stageAuthenticateSuccess(provider)
-    }
-
-    private fun stageAuthenticateSuccess(provider: AuthenticationProvider) {
-        every { provider.authenticate(getValidAuthentication()) }
-                .returns(getValidAuthenticationToken())
-    }
-
-    private fun stageAuthenticateFailure(provider: AuthenticationProvider) {
-        every { provider.authenticate(any()) }
-                .throws(AuthenticationServiceException(MSG_AUTHENTICATION_FAILURE))
-    }
-
-    private fun getValidAuthentication(): Authentication {
-        val token = UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD)
-        token.details = WebAuthenticationDetails(MockHttpServletRequest())
-        return token
     }
 
     private fun stageClientDetailsService(
@@ -148,10 +158,4 @@ class AuthorizationServerTestConfiguration {
         return details
     }
 
-    private fun getValidAuthenticationToken(): Authentication =
-            UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD, TEST_ROLES)
-
-    private fun stageSupports(provider: AuthenticationProvider) {
-        every { provider.supports(any()) }.returns(true)
-    }
 }

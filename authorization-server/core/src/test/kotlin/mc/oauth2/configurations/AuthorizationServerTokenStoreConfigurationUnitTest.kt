@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles
 internal class AuthorizationServerTokenStoreConfigurationUnitTest constructor(
         val applicationContext: ApplicationContext) {
 
-    val tokenStore = applicationContext.getBean(TokenStore::class.java)
+    val tokenStore : TokenStore = applicationContext.getBean(TokenStore::class.java)
 
     @Test
     fun `test can retrieve tokenStore bean`() {
