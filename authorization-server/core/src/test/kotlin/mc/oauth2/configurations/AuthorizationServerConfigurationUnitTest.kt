@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.common.OAuth2AccessToken
 import org.springframework.security.oauth2.provider.ClientDetails
 import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.security.oauth2.provider.OAuth2Authentication
@@ -68,9 +69,14 @@ internal class AuthorizationServerConfigurationUnitTest(
     @Test
     fun `test is set TokenStore`() {
         val authentication= getValidOAuth2AuthenticationToken()
-        val expected = tokenservice.createAccessToken(authentication)
+        val expected = stageTokenStore(authentication)
         val actual = tokenStore.getAccessToken(authentication)
         assertThat(actual).isEqualTo(expected)
+    }
+
+    private fun stageTokenStore(
+            authentication: OAuth2Authentication): OAuth2AccessToken {
+        return tokenservice.createAccessToken(authentication)
     }
 
     private fun getValidOAuth2AuthenticationToken(): OAuth2Authentication {
