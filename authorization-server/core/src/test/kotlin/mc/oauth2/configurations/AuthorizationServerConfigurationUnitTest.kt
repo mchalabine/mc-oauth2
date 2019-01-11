@@ -41,7 +41,7 @@ internal class AuthorizationServerConfigurationUnitTest(
 
     val tokenStore: TokenStore = getTokenStoreBean()
 
-    val tokenservice: AuthorizationServerTokenServices = getAuthorizationServerTokenServices()
+    val tokenServices: AuthorizationServerTokenServices = getAuthorizationServerTokenServices()
 
     @Test
     fun `assert context forbids bean override`() {
@@ -76,7 +76,7 @@ internal class AuthorizationServerConfigurationUnitTest(
 
     private fun stageTokenStore(
             authentication: OAuth2Authentication): OAuth2AccessToken {
-        return tokenservice.createAccessToken(authentication)
+        return tokenServices.createAccessToken(authentication)
     }
 
     private fun getValidOAuth2AuthenticationToken(): OAuth2Authentication {
