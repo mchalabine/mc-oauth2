@@ -123,13 +123,13 @@ internal class AuthorizationServerConfigurationUnitTest(
     private fun getBeanFactory() =
             (applicationContext as GenericApplicationContext).defaultListableBeanFactory
 
+    private fun getTokenStoreBean(): TokenStore {
+        return applicationContext.getBean("tokenStore", TokenStore::class.java)
+    }
+
     private fun getAuthorizationServerTokenServices(): AuthorizationServerTokenServices {
         return applicationContext.getBean("defaultAuthorizationServerTokenServices",
                 AuthorizationServerTokenServices::class.java)
-    }
-
-    private fun getTokenStoreBean(): TokenStore {
-        return applicationContext.getBean("tokenStore", TokenStore::class.java)
     }
 }
 
