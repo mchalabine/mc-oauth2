@@ -41,7 +41,7 @@ internal class AuthorizationServerConfigurationUnitTest(
 
     val tokenStore: TokenStore = getTokenStoreBean()
 
-    val tokenServices: AuthorizationServerTokenServices = getAuthorizationServerTokenServices()
+    val tokenServices: AuthorizationServerTokenServices = getAuthorizationServerTokenServicesBean()
 
     @Test
     fun `assert context forbids bean override`() {
@@ -127,7 +127,7 @@ internal class AuthorizationServerConfigurationUnitTest(
         return applicationContext.getBean("tokenStore", TokenStore::class.java)
     }
 
-    private fun getAuthorizationServerTokenServices(): AuthorizationServerTokenServices {
+    private fun getAuthorizationServerTokenServicesBean(): AuthorizationServerTokenServices {
         return applicationContext.getBean("defaultAuthorizationServerTokenServices",
                 AuthorizationServerTokenServices::class.java)
     }
