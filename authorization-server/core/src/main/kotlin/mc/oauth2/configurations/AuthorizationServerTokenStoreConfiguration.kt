@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
  * @author Michael Chalabine
  */
 @Configuration
-@Profile(Profiles.IN_MEM)
 class AuthorizationServerTokenStoreConfiguration {
 
     @Bean
